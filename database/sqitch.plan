@@ -5,7 +5,6 @@
 appschema 2024-05-25T21:45:35Z 'hadid' <hadid@DARWISH-92698> # Add schema for all flipr objects.
 add_extensions_2024_07_05_22_11_52 2024-05-25T22:11:53Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add plpgsql and pgcrypto extensions
 users [appschema] 2024-05-26T11:11:14Z 'hadi' <'hadi.darwish.03@gmail.com'> # Creates table to track our users.
-insert_user [users appschema] 2024-05-26T12:14:12Z 'hadi' <'hadi.darwish.03@gmail.com'> # Creates a function to insert a user.
 change_pass [users appschema] 2024-05-26T12:15:07Z 'hadi' <'hadi.darwish.03@gmail.com'> # Creates a function to change a user password.
 add_roles_table 2024-06-21T12:36:40Z 'hadi' <'hadi.darwish.03@gmail.com'> # Adds the roles table to the evently schema
 add_user_role 2024-06-21T12:49:28Z 'hadi' <'hadi.darwish.03@gmail.com'> # Adds a role_id column to the users table to reference roles.
@@ -16,3 +15,4 @@ create_events_table 2024-06-28T09:33:17Z 'hadi' <'hadi.darwish.03@gmail.com'> # 
 create_ticket_types_table 2024-06-28T09:35:39Z 'hadi' <'hadi.darwish.03@gmail.com'> # Create the ticket_types table in the evently schema.
 create_tickets_table 2024-06-28T09:38:18Z 'hadi' <'hadi.darwish.03@gmail.com'> # Create the tickets table in the evently schema.
 create_registrations_table 2024-06-28T09:49:02Z 'hadi' <'hadi.darwish.03@gmail.com'> # Create the registrations table in the evently schema.
+seed_roles 2024-07-10T10:44:06Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add initial roles

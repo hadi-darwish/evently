@@ -5,11 +5,12 @@ BEGIN;
 
 SET client_min_messages = 'warning';
 
+-- Create the type in the evently schema
 DO $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'gender') THEN
-        CREATE TYPE gender AS ENUM ('male', 'female');
-    END IF;
+    CREATE TYPE evently.gender AS ENUM ('male', 'female');
+EXCEPTION
+    WHEN duplicate_object THEN null;
 END
 $$;
 
@@ -21,7 +22,7 @@ CREATE TABLE IF NOT EXISTS evently.users (
   phone_number VARCHAR(45),
   address VARCHAR(255),
   city VARCHAR(45),
-  gender gender,
+  gender evently.gender,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ
 );
