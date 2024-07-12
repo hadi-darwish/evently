@@ -4,6 +4,6 @@ BEGIN;
 
 -- XXX Add DDLs here.
 DROP TABLE IF EXISTS evently.users;
-DROP TYPE IF EXISTS gender;
+DROP TYPE IF EXISTS evently.gender;
 
 COMMIT;
