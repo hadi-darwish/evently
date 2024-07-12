@@ -3,9 +3,7 @@
 BEGIN;
 
 -- XXX Add DDLs here.
-DROP TABLE IF EXISTS evently.organizers;
-
-CREATE TABLE evently.organizers (
+CREATE TABLE IF NOT EXISTS evently.organizers (
   id SERIAL PRIMARY KEY,
   org_name VARCHAR(255) NULL,
   users_id INT NOT NULL,

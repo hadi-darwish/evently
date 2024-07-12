@@ -3,9 +3,7 @@
 BEGIN;
 
 -- XXX Add DDLs here.
-DROP TABLE IF EXISTS evently.roles;
-
-CREATE TABLE evently.roles (
+CREATE TABLE IF NOT EXISTS evently.roles (
   id SERIAL PRIMARY KEY,
   role VARCHAR(45) NOT NULL
 );
