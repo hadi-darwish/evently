@@ -3,6 +3,10 @@ import Link from "next/link";
 import { LoginButton } from "../auth/login-button";
 import { Button } from "../ui/button";
 import { auth, signOut } from "@/auth";
+import NavItems from "./NavItems";
+import MobileNav from "./MobileNav";
+import { LogOutIcon } from "lucide-react";
+import LogoutButton from "../auth/logout-button";
 
 const Header = async () => {
   const session = await auth();
@@ -19,17 +23,14 @@ const Header = async () => {
         </Link>
 
         {session !== null && (
+          <nav className="md:flex-between hidden w-full max-w-xs">
+            <NavItems />
+          </nav>
+        )}
+        {session !== null && (
           <div className="flex w-32 justify-end gap-3">
-            <form
-              action={async () => {
-                "use server";
-                await signOut();
-              }}
-            >
-              <Button type="submit" className="rounded-full" size="lg">
-                Logout
-              </Button>
-            </form>
+            <LogoutButton />
+            <MobileNav />
           </div>
         )}
 
