@@ -16,3 +16,9 @@ create_ticket_types_table 2024-06-28T09:35:39Z 'hadi' <'hadi.darwish.03@gmail.co
 create_tickets_table 2024-06-28T09:38:18Z 'hadi' <'hadi.darwish.03@gmail.com'> # Create the tickets table in the evently schema.
 create_registrations_table 2024-06-28T09:49:02Z 'hadi' <'hadi.darwish.03@gmail.com'> # Create the registrations table in the evently schema.
 seed_roles 2024-07-10T10:44:06Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add initial roles
+register_function 2024-07-19T22:37:49Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add register function
+add_user_info_type 2024-07-20T13:03:29Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add user_info composite type
+login_function 2024-07-20T14:52:35Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add login function
+verification_token 2024-07-20T15:23:20Z 'hadi' <'hadi.darwish.03@gmail.com'> # Create verification_token table
+accounts 2024-07-20T15:25:09Z 'hadi' <'hadi.darwish.03@gmail.com'> # Create accounts table
+sessions 2024-07-20T15:28:15Z 'hadi' <'hadi.darwish.03@gmail.com'> # Create sessions table

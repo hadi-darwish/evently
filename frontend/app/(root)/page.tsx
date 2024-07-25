@@ -1,5 +1,10 @@
-import Image from "next/image";
+import { auth } from "@/auth";
 
-export default function Home() {
-  return <main></main>;
+export default async function Home() {
+  const session = await auth();
+  return (
+    <main>
+      <pre>{JSON.stringify(session, null, 2)}</pre>
+    </main>
+  );
 }

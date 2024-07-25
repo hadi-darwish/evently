@@ -1,0 +1,8 @@
+schema: http://localhost:8080/graphql # Update this to your GraphQL endpoint
+documents: "src/**/*.graphql" # Update this to the path where your GraphQL queries are located
+generates:
+  src/generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
