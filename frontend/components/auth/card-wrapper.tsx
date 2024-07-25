@@ -1,5 +1,6 @@
 "use client";
 
+import { CSSProperties } from "react";
 import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 import { BackButton } from "./back-button";
 import { Header } from "./header";
@@ -11,6 +12,8 @@ interface CardWrapperProps {
   backButtonLabel: string;
   backButtonHref: string;
   showSocial?: boolean;
+  className?: string;
+  style?: CSSProperties;
 }
 
 export const CardWrapper = ({
@@ -19,9 +22,21 @@ export const CardWrapper = ({
   backButtonLabel,
   backButtonHref,
   showSocial = false,
+  className = "",
+  style = {},
 }: CardWrapperProps) => {
   return (
-    <Card className="w-[400px] shadow-md">
+    <Card
+      className={`w-[400px] shadow-md ${className}`}
+      style={{
+        ...style,
+        overflowY: "auto",
+        maxHeight: "100%",
+        scrollbarWidth: "none" /* Hide scrollbar for Firefox */,
+        msOverflowStyle:
+          "none" /* Hide scrollbar for Internet Explorer and Edge */,
+      }}
+    >
       <CardHeader>
         <Header label={headerLabel} />
       </CardHeader>
