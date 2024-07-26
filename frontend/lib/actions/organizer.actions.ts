@@ -13,7 +13,6 @@ export const getOrganizerByUserId = async (usersId: number) => {
       mutation: ORGANIZER_BY_USER_ID_MUTATION,
       variables: { input: { pUsersId: usersId } },
     });
-    console.log("Organizer by User ID:", data?.organizerbyusersid?.results);
 
     return data?.organizerbyusersid?.results;
   } catch (error) {

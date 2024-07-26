@@ -29,7 +29,6 @@ export const createCategory = async ({
       mutation: CREATE_CATEGORY_MUTATION,
       variables: { input },
     });
-    console.log(data?.createCategory?.category);
 
     return data?.createCategory?.category;
   } catch (error) {
@@ -45,8 +44,6 @@ export const getAllCategories = async (args: QueryAllCategoriesArgs) => {
       query: GET_ALL_CATEGORIES_QUERY,
       variables: args,
     });
-
-    console.log(data?.allCategories?.edges.map((edge) => edge.node));
 
     return data?.allCategories?.edges.map((edge) => edge.node);
   } catch (error) {
