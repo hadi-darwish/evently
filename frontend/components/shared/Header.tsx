@@ -15,7 +15,7 @@ const Header = async () => {
       <div className="wrapper flex items-center justify-between">
         <Link href="/" className="w-36">
           <Image
-            src="assets/images/logo.svg"
+            src="/assets/images/logo.svg"
             alt="Evently logo"
             width={128}
             height={38}

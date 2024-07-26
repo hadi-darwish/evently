@@ -28,7 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { register } from "@/actions/register";
+import { register } from "@/lib/actions/register";
 import { useRouter } from "next/navigation";
 
 export const RegisterForm = () => {

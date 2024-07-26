@@ -2,7 +2,7 @@
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import * as z from "zod";
 import { RegisterSchema } from "@/schemas";
-import { REGISTER_MUTATION } from "@/mutations/register";
+import { REGISTER_MUTATION } from "@/lib/mutations/register";
 import client from "@/apolloClient";
 import {
   Gender,

@@ -9,7 +9,7 @@ import {
   LoginFunctionPayload,
 } from "@/schemas/generated/graphql";
 import client from "./apolloClient";
-import { LOGIN_MUTATION } from "./mutations/login";
+import { LOGIN_MUTATION } from "./lib/mutations/login";
 
 export default {
   providers: [
