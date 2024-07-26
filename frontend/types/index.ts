@@ -1,3 +1,5 @@
+import { InputMaybe, Scalars } from "@/schemas/generated/graphql";
+
 // ====== USER PARAMS
 export type CreateUserParams = {
   clerkId: string;
@@ -61,6 +63,8 @@ export type GetAllEventsParams = {
   category: string;
   limit: number;
   page: number;
+  after?: InputMaybe<Scalars["Cursor"]["input"]>;
+  before?: InputMaybe<Scalars["Cursor"]["input"]>;
 };
 
 export type GetEventsByUserParams = {
