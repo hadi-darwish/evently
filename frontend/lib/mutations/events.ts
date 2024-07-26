@@ -51,3 +51,61 @@ export const GET_EVENT_BY_ID = gql`
     }
   }
 `;
+
+export const GET_ALL_EVENTS = gql`
+  query GetAllEvents(
+    $after: Cursor
+    $before: Cursor
+    $first: Int
+    $last: Int
+    $offset: Int
+    $orderBy: [EventsOrderBy!]
+    $condition: EventCondition
+  ) {
+    allEvents(
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      offset: $offset
+      orderBy: $orderBy
+      condition: $condition
+    ) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        cursor
+        node {
+          id
+          title
+          description
+          startDatetime
+          endDatetime
+          location
+          isFree
+          price
+          imageUrl
+          url
+          createdAt
+          updatedAt
+          categoriesId
+          organizersId
+          organizerByOrganizersId {
+            id
+            orgName
+            usersId
+          }
+          categoryByCategoriesId {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
