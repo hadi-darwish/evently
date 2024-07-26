@@ -15,12 +15,12 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  BigFloat: { input: any; output: any; }
   BigInt: { input: any; output: any; }
   Cursor: { input: any; output: any; }
   Date: { input: any; output: any; }
   Datetime: { input: any; output: any; }
   JSON: { input: any; output: any; }
-  Time: { input: any; output: any; }
 };
 
 export type Account = Node & {
@@ -515,6 +515,43 @@ export type CreateEventPayloadEventEdgeArgs = {
   orderBy?: InputMaybe<Array<EventsOrderBy>>;
 };
 
+/** All input for the create `Order` mutation. */
+export type CreateOrderInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `Order` to be created by this mutation. */
+  order: OrderInput;
+};
+
+/** The output of our create `Order` mutation. */
+export type CreateOrderPayload = {
+  __typename?: 'CreateOrderPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Event` that is related to this `Order`. */
+  eventByEventId?: Maybe<Event>;
+  /** The `Order` that was created by this mutation. */
+  order?: Maybe<Order>;
+  /** An edge for our `Order`. May be used by Relay 1. */
+  orderEdge?: Maybe<OrdersEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Order`. */
+  userByUserId?: Maybe<User>;
+};
+
+
+/** The output of our create `Order` mutation. */
+export type CreateOrderPayloadOrderEdgeArgs = {
+  orderBy?: InputMaybe<Array<OrdersOrderBy>>;
+};
+
 /** All input for the create `Organizer` mutation. */
 export type CreateOrganizerInput = {
   /**
@@ -893,6 +930,16 @@ export type DeleteCategoryByIdInput = {
   id: Scalars['Int']['input'];
 };
 
+/** All input for the `deleteCategoryByName` mutation. */
+export type DeleteCategoryByNameInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+};
+
 /** All input for the `deleteCategory` mutation. */
 export type DeleteCategoryInput = {
   /**
@@ -973,6 +1020,64 @@ export type DeleteEventPayload = {
 /** The output of our delete `Event` mutation. */
 export type DeleteEventPayloadEventEdgeArgs = {
   orderBy?: InputMaybe<Array<EventsOrderBy>>;
+};
+
+/** All input for the `deleteOrderById` mutation. */
+export type DeleteOrderByIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['Int']['input'];
+};
+
+/** All input for the `deleteOrderByStripeId` mutation. */
+export type DeleteOrderByStripeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  stripeId: Scalars['String']['input'];
+};
+
+/** All input for the `deleteOrder` mutation. */
+export type DeleteOrderInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Order` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The output of our delete `Order` mutation. */
+export type DeleteOrderPayload = {
+  __typename?: 'DeleteOrderPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedOrderId?: Maybe<Scalars['ID']['output']>;
+  /** Reads a single `Event` that is related to this `Order`. */
+  eventByEventId?: Maybe<Event>;
+  /** The `Order` that was deleted by this mutation. */
+  order?: Maybe<Order>;
+  /** An edge for our `Order`. May be used by Relay 1. */
+  orderEdge?: Maybe<OrdersEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Order`. */
+  userByUserId?: Maybe<User>;
+};
+
+
+/** The output of our delete `Order` mutation. */
+export type DeleteOrderPayloadOrderEdgeArgs = {
+  orderBy?: InputMaybe<Array<OrdersOrderBy>>;
 };
 
 /** All input for the `deleteOrganizerById` mutation. */
@@ -1358,22 +1463,38 @@ export type Event = Node & {
   /** Reads a single `Category` that is related to this `Event`. */
   categoryByCategoriesId?: Maybe<Category>;
   createdAt?: Maybe<Scalars['Datetime']['output']>;
-  date?: Maybe<Scalars['Date']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  endDatetime?: Maybe<Scalars['Datetime']['output']>;
   id: Scalars['Int']['output'];
+  imageUrl?: Maybe<Scalars['String']['output']>;
+  isFree?: Maybe<Scalars['Boolean']['output']>;
   location?: Maybe<Scalars['String']['output']>;
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
+  /** Reads and enables pagination through a set of `Order`. */
+  ordersByEventId: OrdersConnection;
   /** Reads a single `Organizer` that is related to this `Event`. */
   organizerByOrganizersId?: Maybe<Organizer>;
   organizersId: Scalars['Int']['output'];
+  price?: Maybe<Scalars['BigFloat']['output']>;
   /** Reads and enables pagination through a set of `Registration`. */
   registrationsByEventsId: RegistrationsConnection;
+  startDatetime?: Maybe<Scalars['Datetime']['output']>;
   /** Reads and enables pagination through a set of `Ticket`. */
   ticketsByEventsId: TicketsConnection;
-  time?: Maybe<Scalars['Time']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
+};
+
+
+export type EventOrdersByEventIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrderCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrdersOrderBy>>;
 };
 
 
@@ -1404,18 +1525,24 @@ export type EventCondition = {
   categoriesId?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `createdAt` field. */
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
-  /** Checks for equality with the object’s `date` field. */
-  date?: InputMaybe<Scalars['Date']['input']>;
   /** Checks for equality with the object’s `description` field. */
   description?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `endDatetime` field. */
+  endDatetime?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['Int']['input']>;
+  /** Checks for equality with the object’s `imageUrl` field. */
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `isFree` field. */
+  isFree?: InputMaybe<Scalars['Boolean']['input']>;
   /** Checks for equality with the object’s `location` field. */
   location?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `organizersId` field. */
   organizersId?: InputMaybe<Scalars['Int']['input']>;
-  /** Checks for equality with the object’s `time` field. */
-  time?: InputMaybe<Scalars['Time']['input']>;
+  /** Checks for equality with the object’s `price` field. */
+  price?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Checks for equality with the object’s `startDatetime` field. */
+  startDatetime?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `title` field. */
   title?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `updatedAt` field. */
@@ -1426,12 +1553,15 @@ export type EventCondition = {
 export type EventInput = {
   categoriesId: Scalars['Int']['input'];
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
-  date?: InputMaybe<Scalars['Date']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  endDatetime?: InputMaybe<Scalars['Datetime']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  isFree?: InputMaybe<Scalars['Boolean']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   organizersId: Scalars['Int']['input'];
-  time?: InputMaybe<Scalars['Time']['input']>;
+  price?: InputMaybe<Scalars['BigFloat']['input']>;
+  startDatetime?: InputMaybe<Scalars['Datetime']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
@@ -1440,12 +1570,15 @@ export type EventInput = {
 export type EventPatch = {
   categoriesId?: InputMaybe<Scalars['Int']['input']>;
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
-  date?: InputMaybe<Scalars['Date']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  endDatetime?: InputMaybe<Scalars['Datetime']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  isFree?: InputMaybe<Scalars['Boolean']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   organizersId?: InputMaybe<Scalars['Int']['input']>;
-  time?: InputMaybe<Scalars['Time']['input']>;
+  price?: InputMaybe<Scalars['BigFloat']['input']>;
+  startDatetime?: InputMaybe<Scalars['Datetime']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
@@ -1478,21 +1611,27 @@ export enum EventsOrderBy {
   CategoriesIdDesc = 'CATEGORIES_ID_DESC',
   CreatedAtAsc = 'CREATED_AT_ASC',
   CreatedAtDesc = 'CREATED_AT_DESC',
-  DateAsc = 'DATE_ASC',
-  DateDesc = 'DATE_DESC',
   DescriptionAsc = 'DESCRIPTION_ASC',
   DescriptionDesc = 'DESCRIPTION_DESC',
+  EndDatetimeAsc = 'END_DATETIME_ASC',
+  EndDatetimeDesc = 'END_DATETIME_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
+  ImageUrlAsc = 'IMAGE_URL_ASC',
+  ImageUrlDesc = 'IMAGE_URL_DESC',
+  IsFreeAsc = 'IS_FREE_ASC',
+  IsFreeDesc = 'IS_FREE_DESC',
   LocationAsc = 'LOCATION_ASC',
   LocationDesc = 'LOCATION_DESC',
   Natural = 'NATURAL',
   OrganizersIdAsc = 'ORGANIZERS_ID_ASC',
   OrganizersIdDesc = 'ORGANIZERS_ID_DESC',
+  PriceAsc = 'PRICE_ASC',
+  PriceDesc = 'PRICE_DESC',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
-  TimeAsc = 'TIME_ASC',
-  TimeDesc = 'TIME_DESC',
+  StartDatetimeAsc = 'START_DATETIME_ASC',
+  StartDatetimeDesc = 'START_DATETIME_DESC',
   TitleAsc = 'TITLE_ASC',
   TitleDesc = 'TITLE_DESC',
   UpdatedAtAsc = 'UPDATED_AT_ASC',
@@ -1540,6 +1679,8 @@ export type Mutation = {
   createCategory?: Maybe<CreateCategoryPayload>;
   /** Creates a single `Event`. */
   createEvent?: Maybe<CreateEventPayload>;
+  /** Creates a single `Order`. */
+  createOrder?: Maybe<CreateOrderPayload>;
   /** Creates a single `Organizer`. */
   createOrganizer?: Maybe<CreateOrganizerPayload>;
   /** Creates a single `Registration`. */
@@ -1568,10 +1709,18 @@ export type Mutation = {
   deleteCategory?: Maybe<DeleteCategoryPayload>;
   /** Deletes a single `Category` using a unique key. */
   deleteCategoryById?: Maybe<DeleteCategoryPayload>;
+  /** Deletes a single `Category` using a unique key. */
+  deleteCategoryByName?: Maybe<DeleteCategoryPayload>;
   /** Deletes a single `Event` using its globally unique id. */
   deleteEvent?: Maybe<DeleteEventPayload>;
   /** Deletes a single `Event` using a unique key. */
   deleteEventById?: Maybe<DeleteEventPayload>;
+  /** Deletes a single `Order` using its globally unique id. */
+  deleteOrder?: Maybe<DeleteOrderPayload>;
+  /** Deletes a single `Order` using a unique key. */
+  deleteOrderById?: Maybe<DeleteOrderPayload>;
+  /** Deletes a single `Order` using a unique key. */
+  deleteOrderByStripeId?: Maybe<DeleteOrderPayload>;
   /** Deletes a single `Organizer` using its globally unique id. */
   deleteOrganizer?: Maybe<DeleteOrganizerPayload>;
   /** Deletes a single `Organizer` using a unique key. */
@@ -1620,10 +1769,18 @@ export type Mutation = {
   updateCategory?: Maybe<UpdateCategoryPayload>;
   /** Updates a single `Category` using a unique key and a patch. */
   updateCategoryById?: Maybe<UpdateCategoryPayload>;
+  /** Updates a single `Category` using a unique key and a patch. */
+  updateCategoryByName?: Maybe<UpdateCategoryPayload>;
   /** Updates a single `Event` using its globally unique id and a patch. */
   updateEvent?: Maybe<UpdateEventPayload>;
   /** Updates a single `Event` using a unique key and a patch. */
   updateEventById?: Maybe<UpdateEventPayload>;
+  /** Updates a single `Order` using its globally unique id and a patch. */
+  updateOrder?: Maybe<UpdateOrderPayload>;
+  /** Updates a single `Order` using a unique key and a patch. */
+  updateOrderById?: Maybe<UpdateOrderPayload>;
+  /** Updates a single `Order` using a unique key and a patch. */
+  updateOrderByStripeId?: Maybe<UpdateOrderPayload>;
   /** Updates a single `Organizer` using its globally unique id and a patch. */
   updateOrganizer?: Maybe<UpdateOrganizerPayload>;
   /** Updates a single `Organizer` using a unique key and a patch. */
@@ -1688,6 +1845,12 @@ export type MutationCreateCategoryArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateEventArgs = {
   input: CreateEventInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateOrderArgs = {
+  input: CreateOrderInput;
 };
 
 
@@ -1776,6 +1939,12 @@ export type MutationDeleteCategoryByIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteCategoryByNameArgs = {
+  input: DeleteCategoryByNameInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteEventArgs = {
   input: DeleteEventInput;
 };
@@ -1784,6 +1953,24 @@ export type MutationDeleteEventArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteEventByIdArgs = {
   input: DeleteEventByIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteOrderArgs = {
+  input: DeleteOrderInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteOrderByIdArgs = {
+  input: DeleteOrderByIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteOrderByStripeIdArgs = {
+  input: DeleteOrderByStripeIdInput;
 };
 
 
@@ -1938,6 +2125,12 @@ export type MutationUpdateCategoryByIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateCategoryByNameArgs = {
+  input: UpdateCategoryByNameInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateEventArgs = {
   input: UpdateEventInput;
 };
@@ -1946,6 +2139,24 @@ export type MutationUpdateEventArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateEventByIdArgs = {
   input: UpdateEventByIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateOrderArgs = {
+  input: UpdateOrderInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateOrderByIdArgs = {
+  input: UpdateOrderByIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateOrderByStripeIdArgs = {
+  input: UpdateOrderByStripeIdInput;
 };
 
 
@@ -2055,6 +2266,106 @@ export type Node = {
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
 };
+
+export type Order = Node & {
+  __typename?: 'Order';
+  createdAt: Scalars['Datetime']['output'];
+  /** Reads a single `Event` that is related to this `Order`. */
+  eventByEventId?: Maybe<Event>;
+  eventId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  stripeId: Scalars['String']['output'];
+  totalAmount: Scalars['BigFloat']['output'];
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `Order`. */
+  userByUserId?: Maybe<User>;
+  userId: Scalars['Int']['output'];
+};
+
+/** A condition to be used against `Order` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type OrderCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `eventId` field. */
+  eventId?: InputMaybe<Scalars['Int']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Checks for equality with the object’s `stripeId` field. */
+  stripeId?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `totalAmount` field. */
+  totalAmount?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** An input for mutations affecting `Order` */
+export type OrderInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  eventId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  stripeId: Scalars['String']['input'];
+  totalAmount: Scalars['BigFloat']['input'];
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId: Scalars['Int']['input'];
+};
+
+/** Represents an update to a `Order`. Fields that are set will be updated. */
+export type OrderPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  eventId?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  stripeId?: InputMaybe<Scalars['String']['input']>;
+  totalAmount?: InputMaybe<Scalars['BigFloat']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** A connection to a list of `Order` values. */
+export type OrdersConnection = {
+  __typename?: 'OrdersConnection';
+  /** A list of edges which contains the `Order` and cursor to aid in pagination. */
+  edges: Array<OrdersEdge>;
+  /** A list of `Order` objects. */
+  nodes: Array<Maybe<Order>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Order` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Order` edge in the connection. */
+export type OrdersEdge = {
+  __typename?: 'OrdersEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Order` at the end of the edge. */
+  node?: Maybe<Order>;
+};
+
+/** Methods to use when ordering `Order`. */
+export enum OrdersOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  EventIdAsc = 'EVENT_ID_ASC',
+  EventIdDesc = 'EVENT_ID_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  StripeIdAsc = 'STRIPE_ID_ASC',
+  StripeIdDesc = 'STRIPE_ID_DESC',
+  TotalAmountAsc = 'TOTAL_AMOUNT_ASC',
+  TotalAmountDesc = 'TOTAL_AMOUNT_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
 
 export type Organizer = Node & {
   __typename?: 'Organizer';
@@ -2169,6 +2480,8 @@ export type Query = Node & {
   allCategories?: Maybe<CategoriesConnection>;
   /** Reads and enables pagination through a set of `Event`. */
   allEvents?: Maybe<EventsConnection>;
+  /** Reads and enables pagination through a set of `Order`. */
+  allOrders?: Maybe<OrdersConnection>;
   /** Reads and enables pagination through a set of `Organizer`. */
   allOrganizers?: Maybe<OrganizersConnection>;
   /** Reads and enables pagination through a set of `Registration`. */
@@ -2191,6 +2504,7 @@ export type Query = Node & {
   /** Reads a single `Category` using its globally unique `ID`. */
   category?: Maybe<Category>;
   categoryById?: Maybe<Category>;
+  categoryByName?: Maybe<Category>;
   /** Reads a single `Event` using its globally unique `ID`. */
   event?: Maybe<Event>;
   eventById?: Maybe<Event>;
@@ -2198,6 +2512,10 @@ export type Query = Node & {
   node?: Maybe<Node>;
   /** The root query type must be a `Node` to work well with Relay 1 mutations. This just resolves to `query`. */
   nodeId: Scalars['ID']['output'];
+  /** Reads a single `Order` using its globally unique `ID`. */
+  order?: Maybe<Order>;
+  orderById?: Maybe<Order>;
+  orderByStripeId?: Maybe<Order>;
   /** Reads a single `Organizer` using its globally unique `ID`. */
   organizer?: Maybe<Organizer>;
   organizerById?: Maybe<Organizer>;
@@ -2288,6 +2606,18 @@ export type QueryAllEventsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<EventsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryAllOrdersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrderCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrdersOrderBy>>;
 };
 
 
@@ -2412,6 +2742,12 @@ export type QueryCategoryByIdArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryCategoryByNameArgs = {
+  name: Scalars['String']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryEventArgs = {
   nodeId: Scalars['ID']['input'];
 };
@@ -2426,6 +2762,24 @@ export type QueryEventByIdArgs = {
 /** The root query type which gives access points into the data universe. */
 export type QueryNodeArgs = {
   nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryOrderArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryOrderByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryOrderByStripeIdArgs = {
+  stripeId: Scalars['String']['input'];
 };
 
 
@@ -3130,6 +3484,18 @@ export type UpdateCategoryByIdInput = {
   id: Scalars['Int']['input'];
 };
 
+/** All input for the `updateCategoryByName` mutation. */
+export type UpdateCategoryByNameInput = {
+  /** An object where the defined keys will be set on the `Category` being updated. */
+  categoryPatch: CategoryPatch;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+};
+
 /** All input for the `updateCategory` mutation. */
 export type UpdateCategoryInput = {
   /** An object where the defined keys will be set on the `Category` being updated. */
@@ -3214,6 +3580,69 @@ export type UpdateEventPayload = {
 /** The output of our update `Event` mutation. */
 export type UpdateEventPayloadEventEdgeArgs = {
   orderBy?: InputMaybe<Array<EventsOrderBy>>;
+};
+
+/** All input for the `updateOrderById` mutation. */
+export type UpdateOrderByIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['Int']['input'];
+  /** An object where the defined keys will be set on the `Order` being updated. */
+  orderPatch: OrderPatch;
+};
+
+/** All input for the `updateOrderByStripeId` mutation. */
+export type UpdateOrderByStripeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** An object where the defined keys will be set on the `Order` being updated. */
+  orderPatch: OrderPatch;
+  stripeId: Scalars['String']['input'];
+};
+
+/** All input for the `updateOrder` mutation. */
+export type UpdateOrderInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Order` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `Order` being updated. */
+  orderPatch: OrderPatch;
+};
+
+/** The output of our update `Order` mutation. */
+export type UpdateOrderPayload = {
+  __typename?: 'UpdateOrderPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Event` that is related to this `Order`. */
+  eventByEventId?: Maybe<Event>;
+  /** The `Order` that was updated by this mutation. */
+  order?: Maybe<Order>;
+  /** An edge for our `Order`. May be used by Relay 1. */
+  orderEdge?: Maybe<OrdersEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Order`. */
+  userByUserId?: Maybe<User>;
+};
+
+
+/** The output of our update `Order` mutation. */
+export type UpdateOrderPayloadOrderEdgeArgs = {
+  orderBy?: InputMaybe<Array<OrdersOrderBy>>;
 };
 
 /** All input for the `updateOrganizerById` mutation. */
@@ -3631,6 +4060,8 @@ export type User = Node & {
   id: Scalars['Int']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
+  /** Reads and enables pagination through a set of `Order`. */
+  ordersByUserId: OrdersConnection;
   /** Reads and enables pagination through a set of `Organizer`. */
   organizersByUsersId: OrganizersConnection;
   password: Scalars['String']['output'];
@@ -3651,6 +4082,17 @@ export type UserAttendeesByUsersIdArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<AttendeesOrderBy>>;
+};
+
+
+export type UserOrdersByUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrderCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrdersOrderBy>>;
 };
 
 

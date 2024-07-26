@@ -65,6 +65,7 @@ export default auth(async (req: NextRequest) => {
   //   secret: process.env.AUTH_SECRET ?? "",
   //   salt: "",
   // });
+  //@ts-ignore
   const isLoggedIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);

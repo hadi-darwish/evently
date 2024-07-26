@@ -22,3 +22,6 @@ login_function 2024-07-20T14:52:35Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add l
 verification_token 2024-07-20T15:23:20Z 'hadi' <'hadi.darwish.03@gmail.com'> # Create verification_token table
 accounts 2024-07-20T15:25:09Z 'hadi' <'hadi.darwish.03@gmail.com'> # Create accounts table
 sessions 2024-07-20T15:28:15Z 'hadi' <'hadi.darwish.03@gmail.com'> # Create sessions table
+add_event_columns_2024_07_26_01_08_59 2024-07-25T22:09:01Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add startDateTime, endDateTime, isFree, and price columns to events table
+add_orders_table_2024_07_26_12_18_05 2024-07-26T09:18:08Z 'hadi' <'hadi.darwish.03@gmail.com'> # 'Added on 2024_07_26_12_18_05'
+make_name_unique_2024_07_26_12_40_14 2024-07-26T09:40:15Z 'hadi' <'hadi.darwish.03@gmail.com'> # Make name column unique in categories table
