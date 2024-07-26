@@ -1,13 +1,20 @@
 "use server";
 
-import { CreateEventParams } from "@/types";
+import { CreateEventParams, GetAllEventsParams } from "@/types";
 import { handleError } from "../utils";
 import {
   CreateEventInput,
   CreateEventPayload,
   Event,
+  EventsConnection,
+  EventsOrderBy,
+  QueryAllEventsArgs,
 } from "@/schemas/generated/graphql";
-import { CREATE_EVENT_MUTATION, GET_EVENT_BY_ID } from "../mutations/events";
+import {
+  CREATE_EVENT_MUTATION,
+  GET_ALL_EVENTS,
+  GET_EVENT_BY_ID,
+} from "../mutations/events";
 import client from "@/apolloClient";
 import { getOrganizerByUserId } from "./organizer.actions";
 import { auth } from "@/auth";
@@ -74,6 +81,42 @@ export const getEventById = async (eventId: number) => {
     }
 
     return event;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getAllEvents = async ({
+  query,
+  limit = 6,
+  page,
+  category,
+  after,
+  before,
+}: GetAllEventsParams) => {
+  try {
+    let args: QueryAllEventsArgs = {
+      orderBy: [EventsOrderBy.CreatedAtDesc],
+      first: limit,
+      //   after: after,
+      //   before: before,
+    };
+
+    const { data } = await client.query<{
+      allEvents: EventsConnection;
+    }>({
+      query: GET_ALL_EVENTS,
+      variables: args,
+    });
+
+    // console.log("datatatatatatatataat", typeof data?.allEvents?.edges);
+
+    // return data?.allEvents?.edges.map((edge) => edge.node);
+    return {
+      data: data?.allEvents?.edges.map((edge) => edge.node),
+      totalPages: Math.ceil(data?.allEvents?.totalCount / limit),
+      pageInfo: data?.allEvents?.pageInfo,
+    };
   } catch (error) {
     handleError(error);
   }
