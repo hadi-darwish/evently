@@ -21,3 +21,33 @@ export const CREATE_EVENT_MUTATION = gql`
     }
   }
 `;
+
+export const GET_EVENT_BY_ID = gql`
+  query GetEventById($id: Int!) {
+    eventById(id: $id) {
+      id
+      title
+      description
+      startDatetime
+      endDatetime
+      location
+      isFree
+      price
+      imageUrl
+      url
+      createdAt
+      updatedAt
+      categoriesId
+      organizersId
+      organizerByOrganizersId {
+        id
+        orgName
+        usersId
+      }
+      categoryByCategoriesId {
+        id
+        name
+      }
+    }
+  }
+`;
