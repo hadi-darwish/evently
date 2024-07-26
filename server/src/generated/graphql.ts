@@ -1484,6 +1484,7 @@ export type Event = Node & {
   ticketsByEventsId: TicketsConnection;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -1547,6 +1548,8 @@ export type EventCondition = {
   title?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `updatedAt` field. */
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `url` field. */
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** An input for mutations affecting `Event` */
@@ -1564,6 +1567,7 @@ export type EventInput = {
   startDatetime?: InputMaybe<Scalars['Datetime']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Represents an update to a `Event`. Fields that are set will be updated. */
@@ -1581,6 +1585,7 @@ export type EventPatch = {
   startDatetime?: InputMaybe<Scalars['Datetime']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A connection to a list of `Event` values. */
@@ -1635,7 +1640,9 @@ export enum EventsOrderBy {
   TitleAsc = 'TITLE_ASC',
   TitleDesc = 'TITLE_DESC',
   UpdatedAtAsc = 'UPDATED_AT_ASC',
-  UpdatedAtDesc = 'UPDATED_AT_DESC'
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UrlAsc = 'URL_ASC',
+  UrlDesc = 'URL_DESC'
 }
 
 export enum Gender {
@@ -1756,6 +1763,7 @@ export type Mutation = {
   /** Deletes a single `VerificationToken` using a unique key. */
   deleteVerificationTokenByIdentifierAndToken?: Maybe<DeleteVerificationTokenPayload>;
   loginFunction?: Maybe<LoginFunctionPayload>;
+  organizerbyusersid?: Maybe<OrganizerbyusersidPayload>;
   registerFunction?: Maybe<RegisterFunctionPayload>;
   /** Updates a single `Account` using its globally unique id and a patch. */
   updateAccount?: Maybe<UpdateAccountPayload>;
@@ -2079,6 +2087,12 @@ export type MutationDeleteVerificationTokenByIdentifierAndTokenArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationLoginFunctionArgs = {
   input: LoginFunctionInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationOrganizerbyusersidArgs = {
+  input: OrganizerbyusersidInput;
 };
 
 
@@ -2416,6 +2430,37 @@ export type OrganizerPatch = {
   id?: InputMaybe<Scalars['Int']['input']>;
   orgName?: InputMaybe<Scalars['String']['input']>;
   usersId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** All input for the `organizerbyusersid` mutation. */
+export type OrganizerbyusersidInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  pUsersId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** The output of our `organizerbyusersid` mutation. */
+export type OrganizerbyusersidPayload = {
+  __typename?: 'OrganizerbyusersidPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  results?: Maybe<Array<Maybe<OrganizerbyusersidRecord>>>;
+};
+
+/** The return type of our `organizerbyusersid` mutation. */
+export type OrganizerbyusersidRecord = {
+  __typename?: 'OrganizerbyusersidRecord';
+  id?: Maybe<Scalars['Int']['output']>;
+  orgName?: Maybe<Scalars['String']['output']>;
+  usersId?: Maybe<Scalars['Int']['output']>;
 };
 
 /** A connection to a list of `Organizer` values. */
