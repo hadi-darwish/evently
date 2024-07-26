@@ -77,31 +77,49 @@ export default {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        // @ts-ignore
         token.user_id = user.user_id;
         token.email = user.email;
         token.name = user.name;
+        // @ts-ignore
         token.role = user.role;
+        // @ts-ignore
         token.phoneNumber = user.phoneNumber;
+        // @ts-ignore
         token.address = user.address;
+        // @ts-ignore
         token.city = user.city;
+        // @ts-ignore
         token.gender = user.gender;
+        // @ts-ignore
         token.organizerInfo = user.organizerInfo;
+        // @ts-ignore
         token.attendeeInfo = user.attendeeInfo;
       }
 
       return token;
     },
     async session({ session, token }) {
+      // @ts-ignore
       session.id = token.id;
+      // @ts-ignore
       session.user.user_id = token.user_id;
+      // @ts-ignore
       session.user.email = token.email;
       session.user.name = token.name;
+      // @ts-ignore
       session.user.role = token.role;
+      // @ts-ignore
       session.user.phoneNumber = token.phoneNumber;
+      // @ts-ignore
       session.user.address = token.address;
+      // @ts-ignore
       session.user.city = token.city;
+      // @ts-ignore
       session.user.gender = token.gender;
+      // @ts-ignore
       session.user.organizerInfo = token.organizerInfo;
+      // @ts-ignore
       session.user.attendeeInfo = token.attendeeInfo;
 
       return session;
