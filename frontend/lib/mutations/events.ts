@@ -127,3 +127,56 @@ export const DELETE_EVENT_MUTATION = gql`
     }
   }
 `;
+
+export const UPDATE_EVENT_MUTATION = gql`
+  mutation UpdateEventById($input: UpdateEventByIdInput!) {
+    updateEventById(input: $input) {
+      event {
+        id
+        title
+        description
+        startDatetime
+        endDatetime
+        location
+        isFree
+        price
+        imageUrl
+        url
+        categoriesId
+        organizersId
+      }
+      clientMutationId
+      query {
+        allEvents {
+          edges {
+            node {
+              id
+              title
+              description
+              startDatetime
+              endDatetime
+              location
+              isFree
+              price
+              imageUrl
+              url
+              createdAt
+              updatedAt
+              categoriesId
+              organizersId
+              organizerByOrganizersId {
+                id
+                orgName
+                usersId
+              }
+              categoryByCategoriesId {
+                id
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
