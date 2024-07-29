@@ -43,6 +43,7 @@ export const getAllCategories = async (args: QueryAllCategoriesArgs) => {
     }>({
       query: GET_ALL_CATEGORIES_QUERY,
       variables: args,
+      fetchPolicy: "no-cache",
     });
 
     return data?.allCategories?.edges.map((edge) => edge.node);
