@@ -109,3 +109,21 @@ export const GET_ALL_EVENTS = gql`
     }
   }
 `;
+
+export const DELETE_EVENT_MUTATION = gql`
+  mutation SoftDeleteEvent($input: SoftDeleteEventInput!) {
+    softDeleteEvent(input: $input) {
+      clientMutationId
+      query {
+        allEvents {
+          edges {
+            node {
+              id
+              deletedAt
+            }
+          }
+        }
+      }
+    }
+  }
+`;
