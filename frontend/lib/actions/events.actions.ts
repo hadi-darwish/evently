@@ -4,6 +4,7 @@ import {
   CreateEventParams,
   DeleteEventParams,
   GetAllEventsParams,
+  GetEventsByUserParams,
   GetRelatedEventsByCategoryParams,
   UpdateEventParams,
 } from "@/types";
@@ -218,6 +219,43 @@ export async function getRelatedEventsByCategory({
       condition: {
         deletedAt: null,
         categoriesId: categoryId,
+      },
+    };
+
+    const { data } = await client.query<{
+      allEvents: EventsConnection;
+    }>({
+      query: GET_ALL_EVENTS,
+      variables: args,
+      fetchPolicy: "no-cache",
+    });
+
+    return {
+      data: data?.allEvents?.edges.map((edge) => edge.node),
+      totalPages: Math.ceil(data?.allEvents?.totalCount / limit),
+      pageInfo: data?.allEvents?.pageInfo,
+    };
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+export async function getEventsByUserId({
+  userId,
+  limit = 6,
+  page,
+}: GetEventsByUserParams) {
+  const session = await auth();
+  //@ts-ignore
+  const orgId = JSON.parse(session?.user?.organizerInfo).id;
+  try {
+    const args: QueryAllEventsArgs = {
+      orderBy: [EventsOrderBy.CreatedAtDesc],
+      last: limit,
+      // offset: (page - 1) * limit,
+      condition: {
+        deletedAt: null,
+        organizersId: orgId,
       },
     };
 
