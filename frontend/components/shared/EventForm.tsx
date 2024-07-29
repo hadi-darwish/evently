@@ -26,15 +26,32 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Checkbox } from "../ui/checkbox";
 import { useUploadThing } from "@/lib/uploadthing";
 import { useRouter } from "next/navigation";
-import { createEvent } from "@/lib/actions/events.actions";
+import { createEvent, updateEvent } from "@/lib/actions/events.actions";
+import { Event } from "@/schemas/generated/graphql";
 
 type EventFormProps = {
   userId: string;
   type: "Create" | "Update";
+  event?: Event;
+  eventId?: number;
 };
-const EventForm = ({ userId, type }: EventFormProps) => {
+const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
   const [files, setFiles] = useState<File[]>([]);
-  const initialValues = eventDefaultValues;
+  const initialValues =
+    event && type === "Update"
+      ? {
+          title: event.title ?? "",
+          description: event.description ?? "",
+          location: event.location ?? "",
+          imageUrl: event.imageUrl ?? "",
+          categoryId: event.categoriesId.toString() ?? "",
+          price: event.price ?? "",
+          isFree: event.isFree ?? false,
+          url: event.url ?? "",
+          startDateTime: new Date(event.startDatetime) ?? new Date(),
+          endDateTime: new Date(event.endDatetime) ?? new Date(),
+        }
+      : eventDefaultValues;
   const router = useRouter();
 
   const { startUpload } = useUploadThing("imageUploader");
@@ -67,6 +84,33 @@ const EventForm = ({ userId, type }: EventFormProps) => {
         if (newEvent) {
           form.reset();
           router.push(`/events/${newEvent.id}`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (type === "Update") {
+      if (!eventId) {
+        router.back();
+        return;
+      }
+
+      try {
+        const updatedEvent = await updateEvent({
+          userId,
+          event: {
+            ...values,
+            imageUrl: uploadedImageUrl,
+            id: eventId,
+            organizer: event?.organizerByOrganizersId,
+          },
+          path: `/events/${eventId}`,
+        });
+
+        if (updatedEvent) {
+          form.reset();
+          router.push(`/events/${updatedEvent.id}`);
         }
       } catch (error) {
         console.log(error);
