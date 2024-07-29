@@ -1,3 +1,10 @@
+import {
+  InputMaybe,
+  Maybe,
+  Organizer,
+  Scalars,
+} from "@/schemas/generated/graphql";
+
 // ====== USER PARAMS
 export type CreateUserParams = {
   clerkId: string;
@@ -36,7 +43,7 @@ export type CreateEventParams = {
 export type UpdateEventParams = {
   userId: string;
   event: {
-    _id: string;
+    id: number;
     title: string;
     imageUrl: string;
     description: string;
@@ -47,12 +54,13 @@ export type UpdateEventParams = {
     price: string;
     isFree: boolean;
     url: string;
+    organizer: Maybe<Organizer> | undefined;
   };
   path: string;
 };
 
 export type DeleteEventParams = {
-  eventId: string;
+  eventId: number;
   path: string;
 };
 
@@ -61,6 +69,8 @@ export type GetAllEventsParams = {
   category: string;
   limit: number;
   page: number;
+  after?: InputMaybe<Scalars["Cursor"]["input"]>;
+  before?: InputMaybe<Scalars["Cursor"]["input"]>;
 };
 
 export type GetEventsByUserParams = {
