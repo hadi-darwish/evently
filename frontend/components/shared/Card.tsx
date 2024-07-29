@@ -18,14 +18,28 @@ const Card = async ({ event, hasOrderLink, hidePrice }: CardProps) => {
   const userId = session?.user?.user_id;
 
   const isEventOrganizer = userId === event?.organizerByOrganizersId?.usersId;
+  const imageUrl = event?.imageUrl
+    ? event?.imageUrl
+    : "/assets/images/placeholder.png";
 
   return (
     <div className="group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">
       <Link
         href={`/events/${event?.id}`}
-        style={{ backgroundImage: `url(${event?.imageUrl})` }}
+        // style={{
+        //   backgroundImage: `url(${imageUrl})`,
+        // }}
         className="flex-center flex-grow bg-gray-50 bg-cover bg-center text-grey-500"
-      />
+      >
+        <Image
+          src={imageUrl}
+          alt={event?.title ?? "event"}
+          width={400}
+          height={230}
+          layout="responsive"
+          objectFit="cover"
+        />
+      </Link>
 
       {isEventOrganizer && !hidePrice && (
         <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">
@@ -38,7 +52,7 @@ const Card = async ({ event, hasOrderLink, hidePrice }: CardProps) => {
             />
           </Link>
 
-          <DeleteConfirmation eventId={event?.id} />
+          <DeleteConfirmation eventId={event?.id ?? 0} />
         </div>
       )}
 

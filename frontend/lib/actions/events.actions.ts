@@ -1,6 +1,11 @@
 "use server";
 
-import { CreateEventParams, GetAllEventsParams } from "@/types";
+import {
+  CreateEventParams,
+  DeleteEventParams,
+  GetAllEventsParams,
+  UpdateEventParams,
+} from "@/types";
 import { handleError } from "../utils";
 import {
   CreateEventInput,
@@ -9,15 +14,20 @@ import {
   EventsConnection,
   EventsOrderBy,
   QueryAllEventsArgs,
+  UpdateEventByIdInput,
+  UpdateEventPayload,
 } from "@/schemas/generated/graphql";
 import {
   CREATE_EVENT_MUTATION,
+  DELETE_EVENT_MUTATION,
   GET_ALL_EVENTS,
   GET_EVENT_BY_ID,
+  UPDATE_EVENT_MUTATION,
 } from "../mutations/events";
 import client from "@/apolloClient";
 import { getOrganizerByUserId } from "./organizer.actions";
 import { auth } from "@/auth";
+import { revalidatePath } from "next/cache";
 
 export const createEvent = async ({
   event,
@@ -59,6 +69,9 @@ export const createEvent = async ({
       variables: { input },
     });
 
+    revalidatePath(path);
+    revalidatePath("/");
+
     return data?.createEvent?.event;
   } catch (error) {
     handleError(error);
@@ -97,9 +110,13 @@ export const getAllEvents = async ({
   try {
     let args: QueryAllEventsArgs = {
       orderBy: [EventsOrderBy.CreatedAtDesc],
-      first: limit,
+      // last: limit,
+      //   offset: (page - 1) * limit,
       //   after: after,
       //   before: before,
+      condition: {
+        deletedAt: null,
+      },
     };
 
     const { data } = await client.query<{
@@ -107,16 +124,33 @@ export const getAllEvents = async ({
     }>({
       query: GET_ALL_EVENTS,
       variables: args,
+      fetchPolicy: "no-cache",
     });
 
-    // console.log("datatatatatatatataat", typeof data?.allEvents?.edges);
-
-    // return data?.allEvents?.edges.map((edge) => edge.node);
     return {
       data: data?.allEvents?.edges.map((edge) => edge.node),
       totalPages: Math.ceil(data?.allEvents?.totalCount / limit),
       pageInfo: data?.allEvents?.pageInfo,
     };
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
+  try {
+    const { data } = await client.mutate({
+      mutation: DELETE_EVENT_MUTATION,
+      variables: {
+        input: {
+          eventId: eventId,
+        },
+      },
+    });
+
+    if (data?.softDeleteEvent?.clientMutationId === null) {
+      revalidatePath(path);
+    }
   } catch (error) {
     handleError(error);
   }

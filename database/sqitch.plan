@@ -27,3 +27,10 @@ add_orders_table_2024_07_26_12_18_05 2024-07-26T09:18:08Z 'hadi' <'hadi.darwish.
 make_name_unique_2024_07_26_12_40_14 2024-07-26T09:40:15Z 'hadi' <'hadi.darwish.03@gmail.com'> # Make name column unique in categories table
 add_url_to_events_table_2024_07_26_20_29_22 2024-07-26T17:29:24Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add url column to events table
 organizer_by_users_id_2024_07_26_21_38_09 2024-07-26T18:38:09Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add function organizerByUsersId
+add_deleted_at_to_users_2024_07_27_16_24_15 2024-07-27T13:24:17Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add deleted_at column to users table
+add_deleted_at_to_attendees_2024_07_27_16_30_20 2024-07-27T13:30:21Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add deleted_at column to attendees table
+add_deleted_at_to_organizers_2024_07_27_16_31_45 2024-07-27T13:31:45Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add deleted_at column to organizers table
+add_deleted_at_to_orders_2024_07_27_16_32_48 2024-07-27T13:32:48Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add deleted_at column to orders table
+add_deleted_at_to_events_2024_07_27_16_34_04 2024-07-27T13:34:04Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add deleted_at column to events table
+add_deleted_at_to_categories_2024_07_27_16_35_13 2024-07-27T13:35:14Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add deleted_at column to categories table
+add_soft_delete_function_and_triggers_2024_07_27_16_42_57 2024-07-27T13:42:58Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add soft delete function and triggers
