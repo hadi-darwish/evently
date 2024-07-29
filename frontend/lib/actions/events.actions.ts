@@ -4,6 +4,7 @@ import {
   CreateEventParams,
   DeleteEventParams,
   GetAllEventsParams,
+  GetRelatedEventsByCategoryParams,
   UpdateEventParams,
 } from "@/types";
 import { handleError } from "../utils";
@@ -28,6 +29,7 @@ import client from "@/apolloClient";
 import { getOrganizerByUserId } from "./organizer.actions";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export const createEvent = async ({
   event,
@@ -151,6 +153,11 @@ export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
     if (data?.softDeleteEvent?.clientMutationId === null) {
       revalidatePath(path);
     }
+
+    if (path === "/events/" + eventId) {
+      console.log("redirecting to home page");
+      revalidatePath("/");
+    }
   } catch (error) {
     handleError(error);
   }
@@ -190,6 +197,43 @@ export async function updateEvent({ userId, event, path }: UpdateEventParams) {
     revalidatePath(path);
     revalidatePath("/");
     return responseData?.updateEventById?.event;
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+// GET RELATED EVENTS: EVENTS WITH SAME CATEGORY
+
+export async function getRelatedEventsByCategory({
+  categoryId,
+  eventId,
+  limit = 3,
+  page = 1,
+}: GetRelatedEventsByCategoryParams) {
+  try {
+    const args: QueryAllEventsArgs = {
+      orderBy: [EventsOrderBy.CreatedAtDesc],
+      // last: limit,
+      // offset: (page - 1) * limit,
+      condition: {
+        deletedAt: null,
+        categoriesId: categoryId,
+      },
+    };
+
+    const { data } = await client.query<{
+      allEvents: EventsConnection;
+    }>({
+      query: GET_ALL_EVENTS,
+      variables: args,
+      fetchPolicy: "no-cache",
+    });
+
+    return {
+      data: data?.allEvents?.edges.map((edge) => edge.node),
+      totalPages: Math.ceil(data?.allEvents?.totalCount / limit),
+      pageInfo: data?.allEvents?.pageInfo,
+    };
   } catch (error) {
     handleError(error);
   }
