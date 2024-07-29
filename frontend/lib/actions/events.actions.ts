@@ -155,3 +155,42 @@ export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
     handleError(error);
   }
 };
+
+export async function updateEvent({ userId, event, path }: UpdateEventParams) {
+  try {
+    if (event.organizer?.usersId !== Number(userId)) {
+      throw new Error("Unauthorized or event not found");
+    }
+
+    const data: UpdateEventByIdInput = {
+      id: event.id,
+      eventPatch: {
+        categoriesId: Number(event.categoryId),
+        description: event.description,
+        endDatetime: event.endDateTime,
+        imageUrl: event.imageUrl,
+        isFree: event.isFree,
+        location: event.location,
+        startDatetime: event.startDateTime,
+        title: event.title,
+        url: event.url,
+        ...(event.isFree ? {} : { price: event.price ?? 0 }), // Conditionally include price
+      },
+    };
+
+    const { data: responseData } = await client.mutate<{
+      updateEventById: UpdateEventPayload;
+    }>({
+      mutation: UPDATE_EVENT_MUTATION,
+      variables: {
+        input: data,
+      },
+    });
+
+    revalidatePath(path);
+    revalidatePath("/");
+    return responseData?.updateEventById?.event;
+  } catch (error) {
+    handleError(error);
+  }
+}
