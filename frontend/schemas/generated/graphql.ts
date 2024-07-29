@@ -170,6 +170,7 @@ export enum AccountsOrderBy {
 export type Attendee = Node & {
   __typename?: "Attendee";
   dateOfBirth?: Maybe<Scalars["Date"]["output"]>;
+  deletedAt?: Maybe<Scalars["Datetime"]["output"]>;
   firstName?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["Int"]["output"];
   lastName?: Maybe<Scalars["String"]["output"]>;
@@ -199,6 +200,8 @@ export type AttendeeRegistrationsByAttendeesIdArgs = {
 export type AttendeeCondition = {
   /** Checks for equality with the object’s `dateOfBirth` field. */
   dateOfBirth?: InputMaybe<Scalars["Date"]["input"]>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   /** Checks for equality with the object’s `firstName` field. */
   firstName?: InputMaybe<Scalars["String"]["input"]>;
   /** Checks for equality with the object’s `id` field. */
@@ -212,6 +215,7 @@ export type AttendeeCondition = {
 /** An input for mutations affecting `Attendee` */
 export type AttendeeInput = {
   dateOfBirth?: InputMaybe<Scalars["Date"]["input"]>;
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   firstName?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["Int"]["input"]>;
   lastName?: InputMaybe<Scalars["String"]["input"]>;
@@ -221,6 +225,7 @@ export type AttendeeInput = {
 /** Represents an update to a `Attendee`. Fields that are set will be updated. */
 export type AttendeePatch = {
   dateOfBirth?: InputMaybe<Scalars["Date"]["input"]>;
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   firstName?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["Int"]["input"]>;
   lastName?: InputMaybe<Scalars["String"]["input"]>;
@@ -253,6 +258,8 @@ export type AttendeesEdge = {
 export enum AttendeesOrderBy {
   DateOfBirthAsc = "DATE_OF_BIRTH_ASC",
   DateOfBirthDesc = "DATE_OF_BIRTH_DESC",
+  DeletedAtAsc = "DELETED_AT_ASC",
+  DeletedAtDesc = "DELETED_AT_DESC",
   FirstNameAsc = "FIRST_NAME_ASC",
   FirstNameDesc = "FIRST_NAME_DESC",
   IdAsc = "ID_ASC",
@@ -292,6 +299,8 @@ export type CategoriesEdge = {
 export enum CategoriesOrderBy {
   CreatedAtAsc = "CREATED_AT_ASC",
   CreatedAtDesc = "CREATED_AT_DESC",
+  DeletedAtAsc = "DELETED_AT_ASC",
+  DeletedAtDesc = "DELETED_AT_DESC",
   DescriptionAsc = "DESCRIPTION_ASC",
   DescriptionDesc = "DESCRIPTION_DESC",
   IdAsc = "ID_ASC",
@@ -308,6 +317,7 @@ export enum CategoriesOrderBy {
 export type Category = Node & {
   __typename?: "Category";
   createdAt: Scalars["Datetime"]["output"];
+  deletedAt?: Maybe<Scalars["Datetime"]["output"]>;
   description?: Maybe<Scalars["String"]["output"]>;
   /** Reads and enables pagination through a set of `Event`. */
   eventsByCategoriesId: EventsConnection;
@@ -335,6 +345,8 @@ export type CategoryEventsByCategoriesIdArgs = {
 export type CategoryCondition = {
   /** Checks for equality with the object’s `createdAt` field. */
   createdAt?: InputMaybe<Scalars["Datetime"]["input"]>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   /** Checks for equality with the object’s `description` field. */
   description?: InputMaybe<Scalars["String"]["input"]>;
   /** Checks for equality with the object’s `id` field. */
@@ -348,6 +360,7 @@ export type CategoryCondition = {
 /** An input for mutations affecting `Category` */
 export type CategoryInput = {
   createdAt?: InputMaybe<Scalars["Datetime"]["input"]>;
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   description?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["Int"]["input"]>;
   name?: InputMaybe<Scalars["String"]["input"]>;
@@ -357,6 +370,7 @@ export type CategoryInput = {
 /** Represents an update to a `Category`. Fields that are set will be updated. */
 export type CategoryPatch = {
   createdAt?: InputMaybe<Scalars["Datetime"]["input"]>;
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   description?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["Int"]["input"]>;
   name?: InputMaybe<Scalars["String"]["input"]>;
@@ -1448,6 +1462,7 @@ export type Event = Node & {
   /** Reads a single `Category` that is related to this `Event`. */
   categoryByCategoriesId?: Maybe<Category>;
   createdAt?: Maybe<Scalars["Datetime"]["output"]>;
+  deletedAt?: Maybe<Scalars["Datetime"]["output"]>;
   description?: Maybe<Scalars["String"]["output"]>;
   endDatetime?: Maybe<Scalars["Datetime"]["output"]>;
   id: Scalars["Int"]["output"];
@@ -1508,6 +1523,8 @@ export type EventCondition = {
   categoriesId?: InputMaybe<Scalars["Int"]["input"]>;
   /** Checks for equality with the object’s `createdAt` field. */
   createdAt?: InputMaybe<Scalars["Datetime"]["input"]>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   /** Checks for equality with the object’s `description` field. */
   description?: InputMaybe<Scalars["String"]["input"]>;
   /** Checks for equality with the object’s `endDatetime` field. */
@@ -1538,6 +1555,7 @@ export type EventCondition = {
 export type EventInput = {
   categoriesId: Scalars["Int"]["input"];
   createdAt?: InputMaybe<Scalars["Datetime"]["input"]>;
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   description?: InputMaybe<Scalars["String"]["input"]>;
   endDatetime?: InputMaybe<Scalars["Datetime"]["input"]>;
   id?: InputMaybe<Scalars["Int"]["input"]>;
@@ -1556,6 +1574,7 @@ export type EventInput = {
 export type EventPatch = {
   categoriesId?: InputMaybe<Scalars["Int"]["input"]>;
   createdAt?: InputMaybe<Scalars["Datetime"]["input"]>;
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   description?: InputMaybe<Scalars["String"]["input"]>;
   endDatetime?: InputMaybe<Scalars["Datetime"]["input"]>;
   id?: InputMaybe<Scalars["Int"]["input"]>;
@@ -1598,6 +1617,8 @@ export enum EventsOrderBy {
   CategoriesIdDesc = "CATEGORIES_ID_DESC",
   CreatedAtAsc = "CREATED_AT_ASC",
   CreatedAtDesc = "CREATED_AT_DESC",
+  DeletedAtAsc = "DELETED_AT_ASC",
+  DeletedAtDesc = "DELETED_AT_DESC",
   DescriptionAsc = "DESCRIPTION_ASC",
   DescriptionDesc = "DESCRIPTION_DESC",
   EndDatetimeAsc = "END_DATETIME_ASC",
@@ -1747,6 +1768,12 @@ export type Mutation = {
   loginFunction?: Maybe<LoginFunctionPayload>;
   organizerbyusersid?: Maybe<OrganizerbyusersidPayload>;
   registerFunction?: Maybe<RegisterFunctionPayload>;
+  softDeleteAttendee?: Maybe<SoftDeleteAttendeePayload>;
+  softDeleteCategory?: Maybe<SoftDeleteCategoryPayload>;
+  softDeleteEvent?: Maybe<SoftDeleteEventPayload>;
+  softDeleteOrder?: Maybe<SoftDeleteOrderPayload>;
+  softDeleteOrganizer?: Maybe<SoftDeleteOrganizerPayload>;
+  softDeleteUser?: Maybe<SoftDeleteUserPayload>;
   /** Updates a single `Account` using its globally unique id and a patch. */
   updateAccount?: Maybe<UpdateAccountPayload>;
   /** Updates a single `Account` using a unique key and a patch. */
@@ -2038,6 +2065,36 @@ export type MutationRegisterFunctionArgs = {
 };
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationSoftDeleteAttendeeArgs = {
+  input: SoftDeleteAttendeeInput;
+};
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationSoftDeleteCategoryArgs = {
+  input: SoftDeleteCategoryInput;
+};
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationSoftDeleteEventArgs = {
+  input: SoftDeleteEventInput;
+};
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationSoftDeleteOrderArgs = {
+  input: SoftDeleteOrderInput;
+};
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationSoftDeleteOrganizerArgs = {
+  input: SoftDeleteOrganizerInput;
+};
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationSoftDeleteUserArgs = {
+  input: SoftDeleteUserInput;
+};
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateAccountArgs = {
   input: UpdateAccountInput;
 };
@@ -2191,6 +2248,7 @@ export type Node = {
 export type Order = Node & {
   __typename?: "Order";
   createdAt: Scalars["Datetime"]["output"];
+  deletedAt?: Maybe<Scalars["Datetime"]["output"]>;
   /** Reads a single `Event` that is related to this `Order`. */
   eventByEventId?: Maybe<Event>;
   eventId: Scalars["Int"]["output"];
@@ -2209,6 +2267,8 @@ export type Order = Node & {
 export type OrderCondition = {
   /** Checks for equality with the object’s `createdAt` field. */
   createdAt?: InputMaybe<Scalars["Datetime"]["input"]>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   /** Checks for equality with the object’s `eventId` field. */
   eventId?: InputMaybe<Scalars["Int"]["input"]>;
   /** Checks for equality with the object’s `id` field. */
@@ -2226,6 +2286,7 @@ export type OrderCondition = {
 /** An input for mutations affecting `Order` */
 export type OrderInput = {
   createdAt?: InputMaybe<Scalars["Datetime"]["input"]>;
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   eventId: Scalars["Int"]["input"];
   id?: InputMaybe<Scalars["Int"]["input"]>;
   stripeId: Scalars["String"]["input"];
@@ -2237,6 +2298,7 @@ export type OrderInput = {
 /** Represents an update to a `Order`. Fields that are set will be updated. */
 export type OrderPatch = {
   createdAt?: InputMaybe<Scalars["Datetime"]["input"]>;
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   eventId?: InputMaybe<Scalars["Int"]["input"]>;
   id?: InputMaybe<Scalars["Int"]["input"]>;
   stripeId?: InputMaybe<Scalars["String"]["input"]>;
@@ -2271,6 +2333,8 @@ export type OrdersEdge = {
 export enum OrdersOrderBy {
   CreatedAtAsc = "CREATED_AT_ASC",
   CreatedAtDesc = "CREATED_AT_DESC",
+  DeletedAtAsc = "DELETED_AT_ASC",
+  DeletedAtDesc = "DELETED_AT_DESC",
   EventIdAsc = "EVENT_ID_ASC",
   EventIdDesc = "EVENT_ID_DESC",
   IdAsc = "ID_ASC",
@@ -2290,6 +2354,7 @@ export enum OrdersOrderBy {
 
 export type Organizer = Node & {
   __typename?: "Organizer";
+  deletedAt?: Maybe<Scalars["Datetime"]["output"]>;
   /** Reads and enables pagination through a set of `Event`. */
   eventsByOrganizersId: EventsConnection;
   id: Scalars["Int"]["output"];
@@ -2316,6 +2381,8 @@ export type OrganizerEventsByOrganizersIdArgs = {
  * for equality and combined with a logical ‘and.’
  */
 export type OrganizerCondition = {
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars["Int"]["input"]>;
   /** Checks for equality with the object’s `orgName` field. */
@@ -2326,6 +2393,7 @@ export type OrganizerCondition = {
 
 /** An input for mutations affecting `Organizer` */
 export type OrganizerInput = {
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   id?: InputMaybe<Scalars["Int"]["input"]>;
   orgName?: InputMaybe<Scalars["String"]["input"]>;
   usersId: Scalars["Int"]["input"];
@@ -2333,6 +2401,7 @@ export type OrganizerInput = {
 
 /** Represents an update to a `Organizer`. Fields that are set will be updated. */
 export type OrganizerPatch = {
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   id?: InputMaybe<Scalars["Int"]["input"]>;
   orgName?: InputMaybe<Scalars["String"]["input"]>;
   usersId?: InputMaybe<Scalars["Int"]["input"]>;
@@ -2393,6 +2462,8 @@ export type OrganizersEdge = {
 
 /** Methods to use when ordering `Organizer`. */
 export enum OrganizersOrderBy {
+  DeletedAtAsc = "DELETED_AT_ASC",
+  DeletedAtDesc = "DELETED_AT_DESC",
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC",
   Natural = "NATURAL",
@@ -3071,6 +3142,138 @@ export enum SessionsOrderBy {
   UserIdAsc = "USER_ID_ASC",
   UserIdDesc = "USER_ID_DESC",
 }
+
+/** All input for the `softDeleteAttendee` mutation. */
+export type SoftDeleteAttendeeInput = {
+  attendeeId?: InputMaybe<Scalars["Int"]["input"]>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+/** The output of our `softDeleteAttendee` mutation. */
+export type SoftDeleteAttendeePayload = {
+  __typename?: "SoftDeleteAttendeePayload";
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars["String"]["output"]>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+/** All input for the `softDeleteCategory` mutation. */
+export type SoftDeleteCategoryInput = {
+  categoryId?: InputMaybe<Scalars["Int"]["input"]>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+/** The output of our `softDeleteCategory` mutation. */
+export type SoftDeleteCategoryPayload = {
+  __typename?: "SoftDeleteCategoryPayload";
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars["String"]["output"]>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+/** All input for the `softDeleteEvent` mutation. */
+export type SoftDeleteEventInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
+  eventId?: InputMaybe<Scalars["Int"]["input"]>;
+};
+
+/** The output of our `softDeleteEvent` mutation. */
+export type SoftDeleteEventPayload = {
+  __typename?: "SoftDeleteEventPayload";
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars["String"]["output"]>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+/** All input for the `softDeleteOrder` mutation. */
+export type SoftDeleteOrderInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
+  orderId?: InputMaybe<Scalars["Int"]["input"]>;
+};
+
+/** The output of our `softDeleteOrder` mutation. */
+export type SoftDeleteOrderPayload = {
+  __typename?: "SoftDeleteOrderPayload";
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars["String"]["output"]>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+/** All input for the `softDeleteOrganizer` mutation. */
+export type SoftDeleteOrganizerInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
+  organizerId?: InputMaybe<Scalars["Int"]["input"]>;
+};
+
+/** The output of our `softDeleteOrganizer` mutation. */
+export type SoftDeleteOrganizerPayload = {
+  __typename?: "SoftDeleteOrganizerPayload";
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars["String"]["output"]>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+/** All input for the `softDeleteUser` mutation. */
+export type SoftDeleteUserInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
+  userId?: InputMaybe<Scalars["Int"]["input"]>;
+};
+
+/** The output of our `softDeleteUser` mutation. */
+export type SoftDeleteUserPayload = {
+  __typename?: "SoftDeleteUserPayload";
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars["String"]["output"]>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
 
 export type Ticket = Node & {
   __typename?: "Ticket";
@@ -3947,6 +4150,7 @@ export type User = Node & {
   attendeesByUsersId: AttendeesConnection;
   city?: Maybe<Scalars["String"]["output"]>;
   createdAt: Scalars["Datetime"]["output"];
+  deletedAt?: Maybe<Scalars["Datetime"]["output"]>;
   email: Scalars["String"]["output"];
   gender?: Maybe<Gender>;
   id: Scalars["Int"]["output"];
@@ -4003,6 +4207,8 @@ export type UserCondition = {
   city?: InputMaybe<Scalars["String"]["input"]>;
   /** Checks for equality with the object’s `createdAt` field. */
   createdAt?: InputMaybe<Scalars["Datetime"]["input"]>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   /** Checks for equality with the object’s `email` field. */
   email?: InputMaybe<Scalars["String"]["input"]>;
   /** Checks for equality with the object’s `gender` field. */
@@ -4040,6 +4246,7 @@ export type UserInput = {
   address?: InputMaybe<Scalars["String"]["input"]>;
   city?: InputMaybe<Scalars["String"]["input"]>;
   createdAt?: InputMaybe<Scalars["Datetime"]["input"]>;
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   email: Scalars["String"]["input"];
   gender?: InputMaybe<Gender>;
   id?: InputMaybe<Scalars["Int"]["input"]>;
@@ -4055,6 +4262,7 @@ export type UserPatch = {
   address?: InputMaybe<Scalars["String"]["input"]>;
   city?: InputMaybe<Scalars["String"]["input"]>;
   createdAt?: InputMaybe<Scalars["Datetime"]["input"]>;
+  deletedAt?: InputMaybe<Scalars["Datetime"]["input"]>;
   email?: InputMaybe<Scalars["String"]["input"]>;
   gender?: InputMaybe<Gender>;
   id?: InputMaybe<Scalars["Int"]["input"]>;
@@ -4095,6 +4303,8 @@ export enum UsersOrderBy {
   CityDesc = "CITY_DESC",
   CreatedAtAsc = "CREATED_AT_ASC",
   CreatedAtDesc = "CREATED_AT_DESC",
+  DeletedAtAsc = "DELETED_AT_ASC",
+  DeletedAtDesc = "DELETED_AT_DESC",
   EmailAsc = "EMAIL_ASC",
   EmailDesc = "EMAIL_DESC",
   GenderAsc = "GENDER_ASC",
