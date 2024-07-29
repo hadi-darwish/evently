@@ -80,8 +80,8 @@ export type GetEventsByUserParams = {
 };
 
 export type GetRelatedEventsByCategoryParams = {
-  categoryId: string;
-  eventId: string;
+  categoryId: number;
+  eventId: number;
   limit?: number;
   page: number | string;
 };
