@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import CheckoutButton from "@/components/shared/CheckoutButton";
 import Collection from "@/components/shared/Collection";
 import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
 import {
@@ -7,6 +8,7 @@ import {
 } from "@/lib/actions/events.actions";
 import { formatDateTime } from "@/lib/utils";
 import { SearchParamProps } from "@/types";
+import { SessionProvider } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -35,7 +37,7 @@ const EventDetails = async ({
     ? event?.imageUrl
     : "/assets/images/placeholder.png";
   return (
-    <>
+    <SessionProvider session={session}>
       <section className="flex justify-center bg-primary-50 bg-dotted-pattern bg-contain">
         <div className="grid grid-cols-1 md:grid-cols-2 2xl:max-w-7xl">
           <Image
@@ -68,6 +70,7 @@ const EventDetails = async ({
                 </p>
               </div>
             </div>
+            <CheckoutButton event={event} />
             {isEventOrganizer && (
               <div className="flex gap-3">
                 <p className="p-medium-16 flex justify-center items-center rounded-full bg-blue-500/10 px-5 py-2.5 text-blue-500">
@@ -155,7 +158,7 @@ const EventDetails = async ({
           totalPages={relatedEvents?.totalPages}
         />
       </section>
-    </>
+    </SessionProvider>
   );
 };
 
