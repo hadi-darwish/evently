@@ -34,3 +34,4 @@ add_deleted_at_to_orders_2024_07_27_16_32_48 2024-07-27T13:32:48Z 'hadi' <'hadi.
 add_deleted_at_to_events_2024_07_27_16_34_04 2024-07-27T13:34:04Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add deleted_at column to events table
 add_deleted_at_to_categories_2024_07_27_16_35_13 2024-07-27T13:35:14Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add deleted_at column to categories table
 add_soft_delete_function_and_triggers_2024_07_27_16_42_57 2024-07-27T13:42:58Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add soft delete function and triggers
+alter_orders_table_add_attendee_id_2024_07_30_01_00_02 2024-07-29T22:00:05Z 'hadi' <'hadi.darwish.03@gmail.com'> # Add attendee_id column
