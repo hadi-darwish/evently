@@ -1,10 +1,52 @@
+// "use client";
 import { auth } from "@/auth";
+import Collection from "@/components/shared/Collection";
 import { Button } from "@/components/ui/button";
+import { getAllEvents } from "@/lib/actions/events.actions";
+import { Event, EventsEdge, Maybe } from "@/schemas/generated/graphql";
+import { ApolloProvider } from "@apollo/client";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default async function Home() {
-  const session = await auth();
+  // const session = await auth();
+  // const [events, setEvents] = useState<EventsEdge[] | undefined>([]);
+  // const [after, setAfter] = useState("");
+  // const [before, setBefore] = useState("");
+  // const [endCursor, setEndCursor] = useState("");
+  // const [startCursor, setStartCursor] = useState("");
+  // const [totalPages, setTotalPages] = useState(0);
+
+  // const fetchEvents = async () => {
+  const events = await getAllEvents({
+    query: "",
+    category: "",
+    page: 1,
+    limit: 6,
+    after: "",
+    before: "",
+  });
+
+  // setEvents(response?.data);
+  // setEndCursor(response?.pageInfo.endCursor);
+  // setStartCursor(response?.pageInfo.startCursor);
+  // setTotalPages(response?.totalPages ?? 0);
+  // };
+  // useEffect(() => {
+  //   fetchEvents();
+  // }, [after, before]);
+
+  // const handleNextPage = () => {
+  //   setAfter(endCursor);
+  //   setBefore("");
+  // };
+
+  // const handlePreviousPage = () => {
+  //   setAfter("");
+  //   setBefore(startCursor);
+  // };
+
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-contain py-5 md:py-10">
@@ -40,6 +82,16 @@ export default async function Home() {
         <div className="flex w-full flex-col gap-5 md:flex-row">
           Search CategoryFilter
         </div>
+
+        <Collection
+          data={events?.data ?? []}
+          emptyTitle="No Events Found"
+          emptyStateSubtext="Come back later"
+          collectionType="All_Events"
+          limit={6}
+          page={1}
+          totalPages={events?.totalPages}
+        />
       </section>
     </>
   );
