@@ -3,7 +3,8 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const { DATABASE, PG_USER, PASSWORD, HOST, PG_PORT } = process.env
+const { DATABASE, PG_USER, PASSWORD, HOST, PG_PORT, DATABASE_SCHEMA } =
+  process.env
 
 const postgraphileMiddleware = postgraphile(
   {
@@ -13,7 +14,7 @@ const postgraphileMiddleware = postgraphile(
     host: HOST,
     port: PG_PORT ? parseInt(PG_PORT, 10) : undefined,
   },
-  DATABASE,
+  DATABASE_SCHEMA,
   {
     watchPg: true,
     graphiql: true,
