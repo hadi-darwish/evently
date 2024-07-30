@@ -9,6 +9,7 @@ import {
 } from "@/schemas/generated/graphql";
 import client from "@/apolloClient";
 import { CREATE_ORDER_MUTATION } from "../mutations/orders";
+import { auth } from "@/auth";
 
 export const checkoutOrder = async (order: CheckoutOrderParams) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -45,10 +46,13 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
 };
 
 export const createOrder = async (order: CreateOrderParams) => {
+  const session = await auth();
+  //@ts-ignore
+  const attendeeId = JSON.parse(session?.user?.attendeeInfo).id;
   try {
     const input: CreateOrderInput = {
       order: {
-        attendeeId: Number(order.buyerId),
+        attendeeId: Number(attendeeId),
         eventId: Number(order.eventId),
         stripeId: order.stripeId,
         totalAmount: order.totalAmount,
