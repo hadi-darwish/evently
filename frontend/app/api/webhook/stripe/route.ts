@@ -35,5 +35,5 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "OK", order: newOrder });
   }
 
-  return new Response("", { status: 200 });
+  return new Response(JSON.stringify({}), { status: 200 });
 }
