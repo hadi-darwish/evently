@@ -5,6 +5,8 @@ import { createOrder } from "@/lib/actions/order.actions";
 export async function POST(request: Request) {
   const body = await request.text();
 
+  console.log("body", body);
+
   const sig = request.headers.get("stripe-signature") as string;
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
@@ -12,16 +14,25 @@ export async function POST(request: Request) {
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
+
+    console.log("event", event);
   } catch (err) {
+    console.error("error", err);
     return NextResponse.json({ message: "Webhook error", error: err });
   }
 
   // Get the ID and type
   const eventType = event.type;
 
+  console.log("eventType", eventType);
+
   // CREATE
   if (eventType === "checkout.session.completed") {
     const { id, amount_total, metadata } = event.data.object;
+
+    console.log("id", id);
+    console.log("amount_total", amount_total);
+    console.log("metadata", metadata);
 
     const order = {
       stripeId: id,
@@ -31,8 +42,13 @@ export async function POST(request: Request) {
       createdAt: new Date(),
     };
 
-    const newOrder = await createOrder(order);
-    return NextResponse.json({ message: "OK", order: newOrder });
+    try {
+      const newOrder = await createOrder(order);
+      return NextResponse.json({ message: "OK", order: newOrder });
+    } catch (error) {
+      console.error("error", error);
+      return NextResponse.json({ message: "Create order error", error });
+    }
   }
 
   return new Response(JSON.stringify(""), { status: 200 });
