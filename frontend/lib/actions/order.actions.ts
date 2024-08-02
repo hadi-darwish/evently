@@ -1,15 +1,24 @@
 "use server";
 import Stripe from "stripe";
-import { CheckoutOrderParams, CreateOrderParams } from "@/types";
+import {
+  CheckoutOrderParams,
+  CreateOrderParams,
+  GetOrdersByEventParams,
+  GetOrdersByUserParams,
+} from "@/types";
 import { redirect } from "next/navigation";
 import { handleError } from "../utils";
 import {
   CreateOrderInput,
   CreateOrderPayload,
+  OrdersConnection,
+  OrdersOrderBy,
+  QueryAllOrdersArgs,
 } from "@/schemas/generated/graphql";
 import client from "@/apolloClient";
-import { CREATE_ORDER_MUTATION } from "../mutations/orders";
+import { CREATE_ORDER_MUTATION, GET_ALL_ORDERS } from "../mutations/orders";
 import { auth } from "@/auth";
+import { revalidatePath } from "next/cache";
 
 export const checkoutOrder = async (order: CheckoutOrderParams) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -71,3 +80,75 @@ export const createOrder = async (order: CreateOrderParams) => {
     handleError(error);
   }
 };
+
+export async function getOrdersByUser({
+  userId,
+  limit = 3,
+  page,
+}: GetOrdersByUserParams) {
+  try {
+    const session = await auth();
+    //@ts-ignore
+    const attendeeId = JSON.parse(session?.user?.attendeeInfo).id;
+
+    const args: QueryAllOrdersArgs = {
+      orderBy: [OrdersOrderBy.CreatedAtDesc],
+      //last: limit,
+      //offset: (page - 1) * limit,
+      condition: {
+        deletedAt: null,
+        attendeeId: attendeeId,
+      },
+    };
+
+    const { data } = await client.query<{
+      allOrders: OrdersConnection;
+    }>({
+      query: GET_ALL_ORDERS,
+      variables: args,
+      fetchPolicy: "no-cache",
+    });
+
+    return {
+      data: data?.allOrders?.edges.map((edge) => edge.node),
+      totalPages: Math.ceil(data?.allOrders?.totalCount / limit),
+      pageInfo: data?.allOrders?.pageInfo,
+    };
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+export async function getOrdersByEvent({
+  searchString,
+  eventId,
+}: GetOrdersByEventParams) {
+  try {
+    const args: QueryAllOrdersArgs = {
+      // orderBy: [OrdersOrderBy.CreatedAtDesc],
+      //last: limit,
+      //offset: (page - 1) * limit,
+      condition: {
+        deletedAt: null,
+        eventId: eventId,
+      },
+    };
+
+    const { data } = await client.query<{
+      allOrders: OrdersConnection;
+    }>({
+      query: GET_ALL_ORDERS,
+      variables: args,
+      fetchPolicy: "no-cache",
+    });
+
+    console.log("data", data);
+    revalidatePath("/orders");
+
+    return {
+      data: data?.allOrders?.edges.map((edge) => edge.node),
+    };
+  } catch (error) {
+    handleError(error);
+  }
+}
