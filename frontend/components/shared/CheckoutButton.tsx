@@ -14,7 +14,7 @@ const CheckoutButton = ({ event }: { event: Event | undefined }) => {
   console.log("session", session);
 
   // @ts-ignore
-  const userId = session?.data?.user?.userId;
+  const userId = session?.data?.user?.user_id;
   const hasEventFinished = new Date(event?.endDatetime) < new Date();
 
   return (
