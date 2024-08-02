@@ -13,7 +13,7 @@ export async function POST(request: Request) {
   try {
     event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
   } catch (err) {
-    return NextResponse.json({ message: "Webhook error", error: err });
+    return NextResponse.json({ message: "Webhook error", error: err.message });
   }
 
   // Get the ID and type
@@ -35,5 +35,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "OK", order: newOrder });
   }
 
+  // Return an empty JSON object instead of an empty string
   return new Response(JSON.stringify({}), { status: 200 });
 }
