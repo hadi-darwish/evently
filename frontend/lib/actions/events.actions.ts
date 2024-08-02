@@ -16,6 +16,8 @@ import {
   EventsConnection,
   EventsOrderBy,
   QueryAllEventsArgs,
+  SearchEventIndicesInput,
+  SearchEventIndicesPayload,
   UpdateEventByIdInput,
   UpdateEventPayload,
 } from "@/schemas/generated/graphql";
@@ -24,6 +26,7 @@ import {
   DELETE_EVENT_MUTATION,
   GET_ALL_EVENTS,
   GET_EVENT_BY_ID,
+  GET_EVENTS_WITH_SEARCH,
   UPDATE_EVENT_MUTATION,
 } from "../mutations/events";
 import client from "@/apolloClient";
@@ -111,14 +114,24 @@ export const getAllEvents = async ({
   before,
 }: GetAllEventsParams) => {
   try {
+    const titleCondition: string = query
+      ? { $regex: query, $options: "i" }.$regex
+      : "";
+
+    // Define the category condition
+    // const categoryCondition = category
+    //   ? await getCategoryByName(category)
+    //   : null;
     let args: QueryAllEventsArgs = {
       orderBy: [EventsOrderBy.CreatedAtDesc],
-      // last: limit,
-      //   offset: (page - 1) * limit,
+      first: limit,
+      offset: (page - 1) * limit,
       //   after: after,
       //   before: before,
       condition: {
         deletedAt: null,
+        // categoriesId: category,
+        // title: titleCondition,
       },
     };
 
@@ -246,6 +259,8 @@ export async function getEventsByUserId({
   page,
 }: GetEventsByUserParams) {
   const session = await auth();
+  console.log("sessiopn", session);
+
   //@ts-ignore
   const orgId = JSON.parse(session?.user?.organizerInfo).id;
   try {
@@ -276,3 +291,57 @@ export async function getEventsByUserId({
     handleError(error);
   }
 }
+
+export const getAllEventsWithSearch = async ({
+  query,
+  limit = 6,
+  page = 1,
+  category,
+  after,
+  before,
+}: GetAllEventsParams) => {
+  console.log("query", query);
+
+  try {
+    let args: SearchEventIndicesInput = {
+      limit: limit,
+      // page: page,
+      offset: (page - 1) * limit,
+      searchTerm: query,
+      categoryId: category === 0 ? null : category,
+    };
+
+    console.log("args", args);
+
+    const { data } = await client.mutate<{
+      searchEventIndices: SearchEventIndicesPayload;
+    }>({
+      mutation: GET_EVENTS_WITH_SEARCH,
+      variables: {
+        input: args,
+      },
+      fetchPolicy: "no-cache",
+    });
+
+    console.log("response", data?.searchEventIndices.eventSearchIndices);
+
+    let totalCount = data?.searchEventIndices?.eventSearchIndices?.length;
+
+    // console.log("obj", {
+    //   data: data?.searchEventIndices.eventSearchIndices?.map(
+    //     (edge) => edge?.eventByEventId
+    //   ),
+    //   totalPages: Math.ceil(totalCount ?? 0 / limit),
+    // });
+
+    return {
+      data: data?.searchEventIndices.eventSearchIndices?.map(
+        (edge) => edge?.eventByEventId
+      ),
+      //@ts-ignore
+      totalPages: Math.ceil(totalCount / limit),
+    };
+  } catch (error) {
+    handleError(error);
+  }
+};
