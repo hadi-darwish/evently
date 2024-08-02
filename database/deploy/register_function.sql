@@ -49,7 +49,7 @@ CREATE OR REPLACE FUNCTION evently.register_function(
         INSERT INTO evently.users (
             username, email, password, phone_number, address, city, gender, role_id
         ) VALUES (
-            _username, _email, crypt(_password, gen_salt('bf')), _phone_number, _address, _city, _gender, _role_id
+            _username, _email, extensions.crypt(_password, extensions.gen_salt('bf')), _phone_number, _address, _city, _gender, _role_id
         ) RETURNING id INTO _user_id;
 
         -- Insert into attendee table if role is user
