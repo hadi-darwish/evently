@@ -180,3 +180,38 @@ export const UPDATE_EVENT_MUTATION = gql`
     }
   }
 `;
+
+export const GET_EVENTS_WITH_SEARCH = gql`
+  mutation searchEvents($input: SearchEventIndicesInput!) {
+    searchEventIndices(input: $input) {
+      clientMutationId
+      eventSearchIndices {
+        eventByEventId {
+          id
+          title
+          description
+          startDatetime
+          endDatetime
+          location
+          isFree
+          price
+          imageUrl
+          url
+          createdAt
+          updatedAt
+          categoriesId
+          organizersId
+          organizerByOrganizersId {
+            id
+            orgName
+            usersId
+          }
+          categoryByCategoriesId {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;

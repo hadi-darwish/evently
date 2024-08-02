@@ -70,7 +70,7 @@ const EventDetails = async ({
                 </p>
               </div>
             </div>
-            <CheckoutButton event={event} />
+            {!isEventOrganizer && <CheckoutButton event={event} />}
             {isEventOrganizer && (
               <div className="flex gap-3">
                 <p className="p-medium-16 flex justify-center items-center rounded-full bg-blue-500/10 px-5 py-2.5 text-blue-500">

@@ -188,6 +188,8 @@ export type Category = Node & {
   createdAt: Scalars['Datetime']['output'];
   deletedAt?: Maybe<Scalars['Datetime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  /** Reads and enables pagination through a set of `EventSearchIndex`. */
+  eventSearchIndicesByCategoryId: EventSearchIndicesConnection;
   /** Reads and enables pagination through a set of `Event`. */
   eventsByCategoriesId: EventsConnection;
   id: Scalars['Int']['output'];
@@ -195,6 +197,17 @@ export type Category = Node & {
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
+};
+
+
+export type CategoryEventSearchIndicesByCategoryIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<EventSearchIndexCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<EventSearchIndicesOrderBy>>;
 };
 
 
@@ -375,6 +388,43 @@ export type CreateEventPayload = {
 /** The output of our create `Event` mutation. */
 export type CreateEventPayloadEventEdgeArgs = {
   orderBy?: InputMaybe<Array<EventsOrderBy>>;
+};
+
+/** All input for the create `EventSearchIndex` mutation. */
+export type CreateEventSearchIndexInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `EventSearchIndex` to be created by this mutation. */
+  eventSearchIndex: EventSearchIndexInput;
+};
+
+/** The output of our create `EventSearchIndex` mutation. */
+export type CreateEventSearchIndexPayload = {
+  __typename?: 'CreateEventSearchIndexPayload';
+  /** Reads a single `Category` that is related to this `EventSearchIndex`. */
+  categoryByCategoryId?: Maybe<Category>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Event` that is related to this `EventSearchIndex`. */
+  eventByEventId?: Maybe<Event>;
+  /** The `EventSearchIndex` that was created by this mutation. */
+  eventSearchIndex?: Maybe<EventSearchIndex>;
+  /** An edge for our `EventSearchIndex`. May be used by Relay 1. */
+  eventSearchIndexEdge?: Maybe<EventSearchIndicesEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our create `EventSearchIndex` mutation. */
+export type CreateEventSearchIndexPayloadEventSearchIndexEdgeArgs = {
+  orderBy?: InputMaybe<Array<EventSearchIndicesOrderBy>>;
 };
 
 /** All input for the create `Order` mutation. */
@@ -774,6 +824,54 @@ export type DeleteEventPayloadEventEdgeArgs = {
   orderBy?: InputMaybe<Array<EventsOrderBy>>;
 };
 
+/** All input for the `deleteEventSearchIndexById` mutation. */
+export type DeleteEventSearchIndexByIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['Int']['input'];
+};
+
+/** All input for the `deleteEventSearchIndex` mutation. */
+export type DeleteEventSearchIndexInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `EventSearchIndex` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The output of our delete `EventSearchIndex` mutation. */
+export type DeleteEventSearchIndexPayload = {
+  __typename?: 'DeleteEventSearchIndexPayload';
+  /** Reads a single `Category` that is related to this `EventSearchIndex`. */
+  categoryByCategoryId?: Maybe<Category>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedEventSearchIndexId?: Maybe<Scalars['ID']['output']>;
+  /** Reads a single `Event` that is related to this `EventSearchIndex`. */
+  eventByEventId?: Maybe<Event>;
+  /** The `EventSearchIndex` that was deleted by this mutation. */
+  eventSearchIndex?: Maybe<EventSearchIndex>;
+  /** An edge for our `EventSearchIndex`. May be used by Relay 1. */
+  eventSearchIndexEdge?: Maybe<EventSearchIndicesEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our delete `EventSearchIndex` mutation. */
+export type DeleteEventSearchIndexPayloadEventSearchIndexEdgeArgs = {
+  orderBy?: InputMaybe<Array<EventSearchIndicesOrderBy>>;
+};
+
 /** All input for the `deleteOrderById` mutation. */
 export type DeleteOrderByIdInput = {
   /**
@@ -1129,6 +1227,8 @@ export type Event = Node & {
   deletedAt?: Maybe<Scalars['Datetime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   endDatetime?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads and enables pagination through a set of `EventSearchIndex`. */
+  eventSearchIndicesByEventId: EventSearchIndicesConnection;
   id: Scalars['Int']['output'];
   imageUrl?: Maybe<Scalars['String']['output']>;
   isFree?: Maybe<Scalars['Boolean']['output']>;
@@ -1149,6 +1249,17 @@ export type Event = Node & {
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
   url?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type EventEventSearchIndicesByEventIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<EventSearchIndexCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<EventSearchIndicesOrderBy>>;
 };
 
 
@@ -1256,6 +1367,116 @@ export type EventPatch = {
   url?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type EventSearchIndex = Node & {
+  __typename?: 'EventSearchIndex';
+  /** Reads a single `Category` that is related to this `EventSearchIndex`. */
+  categoryByCategoryId?: Maybe<Category>;
+  categoryId?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  deletedAt?: Maybe<Scalars['Datetime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Event` that is related to this `EventSearchIndex`. */
+  eventByEventId?: Maybe<Event>;
+  eventId?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['Int']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  searchVector?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/**
+ * A condition to be used against `EventSearchIndex` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type EventSearchIndexCondition = {
+  /** Checks for equality with the object’s `categoryId` field. */
+  categoryId?: InputMaybe<Scalars['Int']['input']>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `description` field. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `eventId` field. */
+  eventId?: InputMaybe<Scalars['Int']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Checks for equality with the object’s `searchVector` field. */
+  searchVector?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `title` field. */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** An input for mutations affecting `EventSearchIndex` */
+export type EventSearchIndexInput = {
+  categoryId?: InputMaybe<Scalars['Int']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  eventId?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  searchVector?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents an update to a `EventSearchIndex`. Fields that are set will be updated. */
+export type EventSearchIndexPatch = {
+  categoryId?: InputMaybe<Scalars['Int']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  eventId?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  searchVector?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** A connection to a list of `EventSearchIndex` values. */
+export type EventSearchIndicesConnection = {
+  __typename?: 'EventSearchIndicesConnection';
+  /** A list of edges which contains the `EventSearchIndex` and cursor to aid in pagination. */
+  edges: Array<EventSearchIndicesEdge>;
+  /** A list of `EventSearchIndex` objects. */
+  nodes: Array<Maybe<EventSearchIndex>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `EventSearchIndex` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `EventSearchIndex` edge in the connection. */
+export type EventSearchIndicesEdge = {
+  __typename?: 'EventSearchIndicesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `EventSearchIndex` at the end of the edge. */
+  node?: Maybe<EventSearchIndex>;
+};
+
+/** Methods to use when ordering `EventSearchIndex`. */
+export enum EventSearchIndicesOrderBy {
+  CategoryIdAsc = 'CATEGORY_ID_ASC',
+  CategoryIdDesc = 'CATEGORY_ID_DESC',
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DeletedAtAsc = 'DELETED_AT_ASC',
+  DeletedAtDesc = 'DELETED_AT_DESC',
+  DescriptionAsc = 'DESCRIPTION_ASC',
+  DescriptionDesc = 'DESCRIPTION_DESC',
+  EventIdAsc = 'EVENT_ID_ASC',
+  EventIdDesc = 'EVENT_ID_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  SearchVectorAsc = 'SEARCH_VECTOR_ASC',
+  SearchVectorDesc = 'SEARCH_VECTOR_DESC',
+  TitleAsc = 'TITLE_ASC',
+  TitleDesc = 'TITLE_DESC'
+}
+
 /** A connection to a list of `Event` values. */
 export type EventsConnection = {
   __typename?: 'EventsConnection';
@@ -1354,6 +1575,8 @@ export type Mutation = {
   createCategory?: Maybe<CreateCategoryPayload>;
   /** Creates a single `Event`. */
   createEvent?: Maybe<CreateEventPayload>;
+  /** Creates a single `EventSearchIndex`. */
+  createEventSearchIndex?: Maybe<CreateEventSearchIndexPayload>;
   /** Creates a single `Order`. */
   createOrder?: Maybe<CreateOrderPayload>;
   /** Creates a single `Organizer`. */
@@ -1382,6 +1605,10 @@ export type Mutation = {
   deleteEvent?: Maybe<DeleteEventPayload>;
   /** Deletes a single `Event` using a unique key. */
   deleteEventById?: Maybe<DeleteEventPayload>;
+  /** Deletes a single `EventSearchIndex` using its globally unique id. */
+  deleteEventSearchIndex?: Maybe<DeleteEventSearchIndexPayload>;
+  /** Deletes a single `EventSearchIndex` using a unique key. */
+  deleteEventSearchIndexById?: Maybe<DeleteEventSearchIndexPayload>;
   /** Deletes a single `Order` using its globally unique id. */
   deleteOrder?: Maybe<DeleteOrderPayload>;
   /** Deletes a single `Order` using a unique key. */
@@ -1417,6 +1644,7 @@ export type Mutation = {
   loginFunction?: Maybe<LoginFunctionPayload>;
   organizerbyusersid?: Maybe<OrganizerbyusersidPayload>;
   registerFunction?: Maybe<RegisterFunctionPayload>;
+  searchEventIndices?: Maybe<SearchEventIndicesPayload>;
   softDeleteAttendee?: Maybe<SoftDeleteAttendeePayload>;
   softDeleteCategory?: Maybe<SoftDeleteCategoryPayload>;
   softDeleteEvent?: Maybe<SoftDeleteEventPayload>;
@@ -1437,6 +1665,10 @@ export type Mutation = {
   updateEvent?: Maybe<UpdateEventPayload>;
   /** Updates a single `Event` using a unique key and a patch. */
   updateEventById?: Maybe<UpdateEventPayload>;
+  /** Updates a single `EventSearchIndex` using its globally unique id and a patch. */
+  updateEventSearchIndex?: Maybe<UpdateEventSearchIndexPayload>;
+  /** Updates a single `EventSearchIndex` using a unique key and a patch. */
+  updateEventSearchIndexById?: Maybe<UpdateEventSearchIndexPayload>;
   /** Updates a single `Order` using its globally unique id and a patch. */
   updateOrder?: Maybe<UpdateOrderPayload>;
   /** Updates a single `Order` using a unique key and a patch. */
@@ -1493,6 +1725,12 @@ export type MutationCreateCategoryArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateEventArgs = {
   input: CreateEventInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateEventSearchIndexArgs = {
+  input: CreateEventSearchIndexInput;
 };
 
 
@@ -1577,6 +1815,18 @@ export type MutationDeleteEventArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteEventByIdArgs = {
   input: DeleteEventByIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteEventSearchIndexArgs = {
+  input: DeleteEventSearchIndexInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteEventSearchIndexByIdArgs = {
+  input: DeleteEventSearchIndexByIdInput;
 };
 
 
@@ -1695,6 +1945,12 @@ export type MutationRegisterFunctionArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationSearchEventIndicesArgs = {
+  input: SearchEventIndicesInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationSoftDeleteAttendeeArgs = {
   input: SoftDeleteAttendeeInput;
 };
@@ -1769,6 +2025,18 @@ export type MutationUpdateEventArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateEventByIdArgs = {
   input: UpdateEventByIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateEventSearchIndexArgs = {
+  input: UpdateEventSearchIndexInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateEventSearchIndexByIdArgs = {
+  input: UpdateEventSearchIndexByIdInput;
 };
 
 
@@ -2124,6 +2392,8 @@ export type Query = Node & {
   allAttendees?: Maybe<AttendeesConnection>;
   /** Reads and enables pagination through a set of `Category`. */
   allCategories?: Maybe<CategoriesConnection>;
+  /** Reads and enables pagination through a set of `EventSearchIndex`. */
+  allEventSearchIndices?: Maybe<EventSearchIndicesConnection>;
   /** Reads and enables pagination through a set of `Event`. */
   allEvents?: Maybe<EventsConnection>;
   /** Reads and enables pagination through a set of `Order`. */
@@ -2150,6 +2420,9 @@ export type Query = Node & {
   /** Reads a single `Event` using its globally unique `ID`. */
   event?: Maybe<Event>;
   eventById?: Maybe<Event>;
+  /** Reads a single `EventSearchIndex` using its globally unique `ID`. */
+  eventSearchIndex?: Maybe<EventSearchIndex>;
+  eventSearchIndexById?: Maybe<EventSearchIndex>;
   /** Fetches an object given its globally unique `ID`. */
   node?: Maybe<Node>;
   /** The root query type must be a `Node` to work well with Relay 1 mutations. This just resolves to `query`. */
@@ -2206,6 +2479,18 @@ export type QueryAllCategoriesArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<CategoriesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryAllEventSearchIndicesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<EventSearchIndexCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<EventSearchIndicesOrderBy>>;
 };
 
 
@@ -2343,6 +2628,18 @@ export type QueryEventArgs = {
 
 /** The root query type which gives access points into the data universe. */
 export type QueryEventByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryEventSearchIndexArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryEventSearchIndexByIdArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -2652,6 +2949,33 @@ export enum RolesOrderBy {
   RoleAsc = 'ROLE_ASC',
   RoleDesc = 'ROLE_DESC'
 }
+
+/** All input for the `searchEventIndices` mutation. */
+export type SearchEventIndicesInput = {
+  categoryId?: InputMaybe<Scalars['Int']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Scalars['String']['input']>;
+  searchTerm?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `searchEventIndices` mutation. */
+export type SearchEventIndicesPayload = {
+  __typename?: 'SearchEventIndicesPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  eventSearchIndices?: Maybe<Array<Maybe<EventSearchIndex>>>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
 
 /** All input for the `softDeleteAttendee` mutation. */
 export type SoftDeleteAttendeeInput = {
@@ -3153,6 +3477,57 @@ export type UpdateEventPayload = {
 /** The output of our update `Event` mutation. */
 export type UpdateEventPayloadEventEdgeArgs = {
   orderBy?: InputMaybe<Array<EventsOrderBy>>;
+};
+
+/** All input for the `updateEventSearchIndexById` mutation. */
+export type UpdateEventSearchIndexByIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** An object where the defined keys will be set on the `EventSearchIndex` being updated. */
+  eventSearchIndexPatch: EventSearchIndexPatch;
+  id: Scalars['Int']['input'];
+};
+
+/** All input for the `updateEventSearchIndex` mutation. */
+export type UpdateEventSearchIndexInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** An object where the defined keys will be set on the `EventSearchIndex` being updated. */
+  eventSearchIndexPatch: EventSearchIndexPatch;
+  /** The globally unique `ID` which will identify a single `EventSearchIndex` to be updated. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The output of our update `EventSearchIndex` mutation. */
+export type UpdateEventSearchIndexPayload = {
+  __typename?: 'UpdateEventSearchIndexPayload';
+  /** Reads a single `Category` that is related to this `EventSearchIndex`. */
+  categoryByCategoryId?: Maybe<Category>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Event` that is related to this `EventSearchIndex`. */
+  eventByEventId?: Maybe<Event>;
+  /** The `EventSearchIndex` that was updated by this mutation. */
+  eventSearchIndex?: Maybe<EventSearchIndex>;
+  /** An edge for our `EventSearchIndex`. May be used by Relay 1. */
+  eventSearchIndexEdge?: Maybe<EventSearchIndicesEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our update `EventSearchIndex` mutation. */
+export type UpdateEventSearchIndexPayloadEventSearchIndexEdgeArgs = {
+  orderBy?: InputMaybe<Array<EventSearchIndicesOrderBy>>;
 };
 
 /** All input for the `updateOrderById` mutation. */

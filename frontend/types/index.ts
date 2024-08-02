@@ -66,7 +66,7 @@ export type DeleteEventParams = {
 
 export type GetAllEventsParams = {
   query: string;
-  category: string;
+  category: number;
   limit: number;
   page: number;
   after?: InputMaybe<Scalars["Cursor"]["input"]>;
@@ -131,12 +131,12 @@ export type CreateOrderParams = {
 };
 
 export type GetOrdersByEventParams = {
-  eventId: string;
+  eventId: number;
   searchString: string;
 };
 
 export type GetOrdersByUserParams = {
-  userId: string | null;
+  userId: number | null;
   limit?: number;
   page: string | number | null;
 };

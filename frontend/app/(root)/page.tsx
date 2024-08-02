@@ -1,32 +1,50 @@
 // "use client";
 import { auth } from "@/auth";
+import CategoryFilter from "@/components/shared/CategoryFilter";
 import Collection from "@/components/shared/Collection";
+import Search from "@/components/shared/Search";
 import { Button } from "@/components/ui/button";
-import { getAllEvents } from "@/lib/actions/events.actions";
+import {
+  getAllEvents,
+  getAllEventsWithSearch,
+} from "@/lib/actions/events.actions";
 import { Event, EventsEdge, Maybe } from "@/schemas/generated/graphql";
+import { SearchParamProps } from "@/types";
 import { ApolloProvider } from "@apollo/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default async function Home() {
-  // const session = await auth();
-  // const [events, setEvents] = useState<EventsEdge[] | undefined>([]);
-  // const [after, setAfter] = useState("");
-  // const [before, setBefore] = useState("");
-  // const [endCursor, setEndCursor] = useState("");
-  // const [startCursor, setStartCursor] = useState("");
-  // const [totalPages, setTotalPages] = useState(0);
+export default async function Home({ searchParams }: SearchParamProps) {
+  const page = Number(searchParams?.page) || 1;
+  let searchString = (searchParams?.query as string) || "";
+  const category = (searchParams?.category as string) || "";
 
-  // const fetchEvents = async () => {
-  const events = await getAllEvents({
-    query: "",
-    category: "",
-    page: 1,
-    limit: 6,
-    after: "",
-    before: "",
-  });
+  console.log("category", category);
+
+  //replace %20 with |
+  searchString = searchString.replaceAll(" ", "|");
+  let events;
+
+  if (searchString === "" && category === "") {
+    events = await getAllEvents({
+      query: searchString,
+      category: Number(category),
+      page,
+      limit: 6,
+      after: "",
+      before: "",
+    });
+  } else {
+    events = getAllEventsWithSearch({
+      query: searchString,
+      category: Number(category),
+      page,
+      limit: 6,
+      after: "",
+      before: "",
+    });
+  }
 
   // setEvents(response?.data);
   // setEndCursor(response?.pageInfo.endCursor);
@@ -80,17 +98,24 @@ export default async function Home() {
           Trust by <br /> Thousands of Events
         </h2>
         <div className="flex w-full flex-col gap-5 md:flex-row">
-          Search CategoryFilter
+          <Search />
+          <CategoryFilter />
         </div>
 
         <Collection
-          data={events?.data ?? []}
+          data={(await events)?.data ?? []}
           emptyTitle="No Events Found"
           emptyStateSubtext="Come back later"
           collectionType="All_Events"
           limit={6}
-          page={1}
-          totalPages={events?.totalPages}
+          page={page}
+          totalPages={(await events)?.totalPages}
+          pageInfo={
+            searchString === "" && category === ""
+              ? //@ts-ignore
+                (await events)?.pageInfo
+              : undefined
+          }
         />
       </section>
     </>

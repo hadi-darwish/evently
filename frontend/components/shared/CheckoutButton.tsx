@@ -25,15 +25,6 @@ const CheckoutButton = ({ event }: { event: Event | undefined }) => {
         </p>
       ) : (
         <>
-          {/* <SignedOut>
-            <Button asChild className="button rounded-full" size="lg">
-              <Link href="/sign-in">Get Tickets</Link>
-            </Button>
-          </SignedOut>
-
-          <SignedIn>
-            <Checkout event={event} userId={userId} />
-          </SignedIn> */}
           {session.status === "unauthenticated" && (
             <LoginButton>
               <Button className="button rounded-full" size="lg">

@@ -24,7 +24,7 @@ CREATE OR REPLACE FUNCTION evently.login_function(
         END IF;
 
         -- Verify password
-        IF _stored_password = crypt(_password, _stored_password) THEN
+        IF _stored_password = extensions.crypt(_password, _stored_password) THEN
             -- Fetch related organizer or attendee information
             IF _role_id = 2 THEN
                 SELECT row_to_json(o) INTO _organizer_info

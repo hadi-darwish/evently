@@ -12,9 +12,9 @@ CREATE OR REPLACE FUNCTION evently.change_pass(
 ) RETURNS BOOLEAN SECURITY DEFINER AS $$
     BEGIN
         UPDATE evently.users
-            SET password = crypt(_new_password, gen_salt('bf'))
+            SET password = extensions.crypt(_new_password, extensions.gen_salt('bf'))
             WHERE id = _id
-            AND password = crypt(_old_password, password);
+            AND password = extensions.crypt(_old_password, password);
         RETURN FOUND;
     END;
 $$ LANGUAGE plpgsql;

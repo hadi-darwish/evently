@@ -1,6 +1,7 @@
 import { Event, EventsEdge, Maybe } from "@/schemas/generated/graphql";
 import React from "react";
 import Card from "./Card";
+import Pagination from "./Pagination";
 
 type CollectionProps = {
   data: (Maybe<Event> | undefined)[];
@@ -11,6 +12,7 @@ type CollectionProps = {
   page: number | string;
   totalPages?: number;
   urlParamName?: string;
+  pageInfo?: any;
 };
 
 const Collection = ({
@@ -22,6 +24,7 @@ const Collection = ({
   page,
   totalPages = 0,
   urlParamName,
+  pageInfo,
 }: CollectionProps) => {
   return (
     <>
@@ -44,13 +47,14 @@ const Collection = ({
             })}
           </ul>
 
-          {/* {totalPages > 1 && (
+          {totalPages > 1 && (
             <Pagination
               urlParamName={urlParamName}
               page={page}
               totalPages={totalPages}
+              pageInfo={pageInfo}
             />
-          )} */}
+          )}
         </div>
       ) : (
         <div className="flex-center wrapper min-h-[200px] w-full flex-col gap-3 rounded-[14px] bg-grey-50 py-28 text-center">
