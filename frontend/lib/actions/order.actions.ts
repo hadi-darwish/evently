@@ -13,6 +13,9 @@ import { auth } from "@/auth";
 
 export const checkoutOrder = async (order: CheckoutOrderParams) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  const attandeeSession = await auth();
+  //@ts-ignore
+  const attendeeId = JSON.parse(attandeeSession?.user?.attendeeInfo).id;
 
   const price = order.isFree ? 0 : Number(order.price) * 100;
 
@@ -32,7 +35,7 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
       ],
       metadata: {
         eventId: order.eventId,
-        buyerId: order.buyerId,
+        buyerId: attendeeId,
       },
       mode: "payment",
       success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/profile`,
@@ -46,13 +49,10 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
 };
 
 export const createOrder = async (order: CreateOrderParams) => {
-  const session = await auth();
-  //@ts-ignore
-  const attendeeId = JSON.parse(session?.user?.attendeeInfo).id;
   try {
     const input: CreateOrderInput = {
       order: {
-        attendeeId: Number(attendeeId),
+        attendeeId: Number(order.buyerId),
         eventId: Number(order.eventId),
         stripeId: order.stripeId,
         totalAmount: order.totalAmount,
