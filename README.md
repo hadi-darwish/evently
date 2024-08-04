@@ -20,9 +20,11 @@
 - As an organizer, I want to create and list new events, so I can attract attendees.
 - As an organizer, I want to manage ticket sales, so I can track revenue and attendance.
 - As an organizer, I want to have to paid directly, so I can receive funds quickly and securely.
-  <br><br>
-    <!-- Implementation -->
-  <img src="./readme/title4.svg"/>
+
+<br><br>
+
+<!-- Implementation -->
+<img src="./readme/title4.svg"/>
 
 ### User Screens (Mobile)
 
