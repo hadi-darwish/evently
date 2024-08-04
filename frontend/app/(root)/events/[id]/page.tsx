@@ -22,6 +22,8 @@ const EventDetails = async ({
   const userId = session?.user?.user_id;
 
   const isEventOrganizer = userId === event?.organizerByOrganizersId?.usersId;
+  //@ts-ignore
+  const isOrganizer = session?.user?.organizerInfo !== null;
 
   const relatedEvents = await getRelatedEventsByCategory({
     categoryId: event?.categoryByCategoriesId?.id as number,
@@ -70,8 +72,8 @@ const EventDetails = async ({
                 </p>
               </div>
             </div>
-            {!isEventOrganizer && <CheckoutButton event={event} />}
-            {isEventOrganizer && (
+            {(!isOrganizer || !session) && <CheckoutButton event={event} />}
+            {session && isEventOrganizer && (
               <div className="flex gap-3">
                 <p className="p-medium-16 flex justify-center items-center rounded-full bg-blue-500/10 px-5 py-2.5 text-blue-500">
                   <Link

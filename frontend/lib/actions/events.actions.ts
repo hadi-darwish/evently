@@ -143,6 +143,7 @@ export const getAllEvents = async ({
       fetchPolicy: "no-cache",
     });
 
+    revalidatePath("/");
     return {
       data: data?.allEvents?.edges.map((edge) => edge.node),
       totalPages: Math.ceil(data?.allEvents?.totalCount / limit),
